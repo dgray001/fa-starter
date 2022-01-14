@@ -1,4 +1,6 @@
 runtime: python39
+env: flex
+entrypoint: gunicorn --bind:$PORT main:app
 
 instance_class: F2
 
