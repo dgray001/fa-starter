@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "gunicorn app:app",
+    "start": "gunicorn -b 127.0.0.1:8080 app:app",
     "build": "ng build --configuration production=true",
     "test": "ng test",
     "lint": "ng lint",

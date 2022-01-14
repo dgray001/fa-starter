@@ -1,11 +1,15 @@
-runtime: python39
+runtime: python
 env: flex
-entrypoint: gunicorn --bind:$PORT main:app
+
+runtime_config:
+  python_version: 3
+
+entrypoint: gunicorn --bind :$PORT app:app
 
 instance_class: F2
 
 env_variables:
-  BUCKET_NAME: "example-gcs-bucket"
+  BUCKET_NAME: "personal-fa-starter-app.appspot.com"
 
 handlers:
 # Matches requests to /images/... to files in static/images/...
