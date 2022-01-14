@@ -47,7 +47,7 @@ testem.log
 Thumbs.db
 .env
 
-# lask
+# flask
 env/*
 __pycache__/*
 
