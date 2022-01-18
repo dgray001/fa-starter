@@ -10,9 +10,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { InputComponent } from './input/input.component';
 import { OutputComponent } from './output/output.component';
+import { OptionsComponent } from './options/options.component';
 
 @NgModule({
-  declarations: [AppComponent, InputComponent, OutputComponent],
+  declarations: [AppComponent, InputComponent, OutputComponent, OptionsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
