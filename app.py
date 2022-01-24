@@ -1,6 +1,7 @@
 import os
 
 import flask
+from flask import request
 import flask_cors
 from dotenv import load_dotenv
 
@@ -10,7 +11,7 @@ load_dotenv()
 
 # Set up the static folder to serve our angular client resources (*.js, *.css)
 app = flask.Flask(__name__,
-                  static_folder='dist/client', static_url_path='/client/')
+                  static_folder='dist/client', static_url_path='/client')
 app.register_blueprint(example.blueprint)
 
 # If we're running in debug, defer to the typescript development server
@@ -34,8 +35,9 @@ app.secret_key = os.urandom(24)
 # If no other routes match (such as /example) this will be called, and the
 # angular app will take over routing.
 @app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
+@app.route('/<path:path>', methods=['POST', 'GET'])
 def serve_angular(path):
+  print("going to: " + path)
   if flask.current_app.config['DEBUG']:
     target = '/'.join([
       flask.current_app.config['ORIGIN'].rstrip('/'),
