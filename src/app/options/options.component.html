@@ -1,6 +1,37 @@
 <mat-card>
   <mat-card-title>Options</mat-card-title>
-  <mat-select>
-
-  </mat-select>
+  <mat-form-field>
+    <mat-label>Input Format</mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="Choose an format"
+      aria-label="Input Format"
+      [formControl]="inputControl"
+      [matAutocomplete]="inputAutocomplete"
+      required>
+    <mat-error *ngIf="inputControl.invalid">Must choose a valid input format</mat-error>
+    <mat-autocomplete #inputAutocomplete="matAutocomplete" autoActiveFirstOption panelWidth="auto">
+      <mat-option *ngFor="let format of inputList | async" [value]="format">
+        {{format}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Output Format</mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="Choose an format"
+      aria-label="Output Format"
+      [formControl]="outputControl"
+      [matAutocomplete]="outputAutocomplete"
+      required>
+    <mat-error *ngIf="outputControl.invalid">Must choose a valid output format</mat-error>
+    <mat-autocomplete #outputAutocomplete="matAutocomplete" autoActiveFirstOption panelWidth="auto">
+      <mat-option *ngFor="let format of outputList | async" [value]="format">
+        {{format}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 </mat-card>
