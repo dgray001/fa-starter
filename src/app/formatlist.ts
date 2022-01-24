@@ -1,4 +1,4 @@
-export const FORMATS: String[] = {
+export const FORMATS : String[] = [
   "abinit -- ABINIT Output Format [Read-only]",
   "acesin -- ACES input format [Write-only]",
   "acesout -- ACES output format [Read-only]",
@@ -165,4 +165,4 @@ export const FORMATS: String[] = {
   "xyz -- XYZ cartesian coordinates format",
   "yob -- YASARA.org YOB format",
   "zin -- ZINDO input format [Write-only]",
-}
+];
