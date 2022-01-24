@@ -16,7 +16,7 @@ export class OptionsComponent implements OnInit {
     map(value => {
       return this.formats.filter(format => {
         return format.toLowerCase().includes(value.toLowerCase())
-          && !format.includes("Write-only");
+          && !format.toLowerCase().includes("write");
       });
     }),
     startWith(this.formats)
@@ -26,7 +26,7 @@ export class OptionsComponent implements OnInit {
     map(value => {
       return this.formats.filter(format => {
         return format.toLowerCase().includes(value.toLowerCase())
-          && !format.includes("Read-only");
+          && !format.toLowerCase().includes("read");
       });
     }),
     startWith(this.formats)
