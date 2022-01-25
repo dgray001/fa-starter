@@ -31,6 +31,7 @@ export class OptionsComponent implements OnInit {
       });
     }),
   );
+  additionalOptions: string = "";
 
   constructor() {}
 

@@ -1,6 +1,13 @@
-.inputTextBox {
+mat-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+mat-card .inputTextBox {
   flex-grow: 1;
-	overflow-x: scroll;
+  overflow-x: scroll;
   overflow-wrap: normal;
   resize: horizontal;
   width: 100%;

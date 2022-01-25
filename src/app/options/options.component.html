@@ -17,7 +17,8 @@
         {{format}}
       </mat-option>
     </mat-autocomplete>
-  </mat-form-field><br>
+  </mat-form-field>
+  <div class="spacer"></div>
   <mat-form-field class="outputFormat">
     <mat-label>Output Format</mat-label>
     <input
@@ -36,4 +37,7 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
+  <div class="spacer"></div>
+  <div>Additional Options</div>
+  <textarea class="additionalOptions" [(ngModel)]="additionalOptions"></textarea>
 </mat-card>

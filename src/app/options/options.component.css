@@ -1,9 +1,27 @@
-mat-card-title {
+.mat-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.mat-card-title {
   text-align: center;
 }
-mat-form-field {
+
+.mat-form-field {
   box-sizing: border-box;
   margin: 0;
   max-width: 100%;
   width: 100%;
+}
+
+.mat-card .additionalOptions {
+  flex-grow: 1;
+  resize: none;
+  width: 100%;
+}
+
+.spacer {
+  height: 2rem;
 }
