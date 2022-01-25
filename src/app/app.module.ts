@@ -8,11 +8,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
-import { InputComponent } from './input/input.component';
-import { OutputComponent } from './output/output.component';
 
 @NgModule({
-  declarations: [AppComponent, InputComponent, OutputComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
