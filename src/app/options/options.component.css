@@ -1,5 +1,9 @@
 mat-card-title {
   text-align: center;
 }
-input {
+mat-form-field {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }

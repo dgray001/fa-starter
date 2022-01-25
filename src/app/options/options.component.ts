@@ -13,23 +13,23 @@ export class OptionsComponent implements OnInit {
   formats: String[] = FORMATS;
   inputControl = new FormControl('', [Validators.required, validateFormat]);
   inputList: Observable<String[]> = this.inputControl.valueChanges.pipe(
+    startWith(""),
     map(value => {
       return this.formats.filter(format => {
         return format.toLowerCase().includes(value.toLowerCase())
           && !format.toLowerCase().includes("write");
       });
-    }),
-    startWith(this.formats)
+    })
   );
   outputControl = new FormControl('', [Validators.required, validateFormat]);
   outputList: Observable<String[]> = this.outputControl.valueChanges.pipe(
+    startWith(""),
     map(value => {
       return this.formats.filter(format => {
         return format.toLowerCase().includes(value.toLowerCase())
           && !format.toLowerCase().includes("read");
       });
     }),
-    startWith(this.formats)
   );
 
   constructor() { }
