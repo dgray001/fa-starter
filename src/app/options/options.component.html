@@ -30,7 +30,7 @@
       [matAutocomplete]="outputAutocomplete"
       required>
     <mat-error *ngIf="outputControl.invalid">Must choose a valid output format</mat-error>
-    <mat-autocomplete class="outputAutocomplete" #outputAutocomplete autoActiveFirstOption panelWidth="auto">
+    <mat-autocomplete class="outputAutocomplete" #outputAutocomplete autoActiveFirstOption>
       <mat-option *ngFor="let format of outputList | async" [value]="format">
         {{format}}
       </mat-option>
