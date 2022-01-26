@@ -8,9 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class OutputComponent implements OnInit {
   outputString: string = "";
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }

@@ -32,10 +32,9 @@ export class OptionsComponent implements OnInit {
     }),
   );
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }
 
