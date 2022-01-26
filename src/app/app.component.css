@@ -4,7 +4,16 @@ mat-card-content {
   padding: 0.5rem;
 }
 
-.component {
+.inputComponent {
   flex: 1;
-  margin: 5px;
+  margin-right: 5px;
+}
+
+.optionsComponent {
+  width: 300px;
+}
+
+.outputComponent {
+  flex: 1;
+  margin-left: 5px;
 }
