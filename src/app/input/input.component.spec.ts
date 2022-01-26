@@ -11,13 +11,13 @@ import { InputComponent } from './input.component';
 describe('InputComponent', () => {
   let component: InputComponent;
   let fixture: ComponentFixture<InputComponent>;
-	let loader: HarnessLoader;
+  let loader: HarnessLoader;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       imports: [ FormsModule ],
-      declarations: [ InputComponent ]
+      declarations: [ InputComponent ],
     })
     .compileComponents();
   });
