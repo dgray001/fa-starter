@@ -36,7 +36,7 @@ describe('OutputComponent', () => {
   it('should update output string based on text in output textbox', async () => {
     await fixture.whenStable();
     const outputHarness = await loader.getHarness(MatInputHarness.with(
-      {selector: 'outputTextBox'}));
+      {selector: '.outputTextBox'}));
 
     await outputHarness.setValue("Some output text");
 

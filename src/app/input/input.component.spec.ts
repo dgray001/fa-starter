@@ -36,7 +36,7 @@ describe('InputComponent', () => {
   it('should update input string based on text in input textbox', async () => {
     await fixture.whenStable();
     const inputHarness = await loader.getHarness(MatInputHarness.with(
-      {selector: 'inputTextBox'}));
+      {selector: '.inputTextBox'}));
 
     await inputHarness.setValue("Some input text");
 
