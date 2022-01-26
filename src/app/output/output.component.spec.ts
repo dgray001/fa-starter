@@ -2,12 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatInputHarness } from '@angular/material/input/testing';
 
 import { OutputComponent } from './output.component';
 
 describe('OutputComponent', () => {
   let component: OutputComponent;
   let fixture: ComponentFixture<OutputComponent>;
+  let loader: HarnessLoader;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -30,11 +34,10 @@ describe('OutputComponent', () => {
 
   it('should update output string based on text in output textbox', async () => {
     await fixture.whenStable();
-    const outputTextBox = fixture.debugElement.query(By.css('.outputTextBox')).nativeElement;
+    const outputHarness = await loader.getHarness(MatInputHarness.with(
+      {selector: 'outputTextBox'}));
 
-    outputTextBox.value = "Some output text";
-    outputTextBox.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
+    await outputHarness.setValue("Some output text");
 
     expect(component.outputString).toEqual("Some output text");
   });
