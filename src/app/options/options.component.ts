@@ -38,11 +38,6 @@ export class OptionsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-
-  obabelOptionsString(): string {
-    return "-i" + this.inputFormat + " -o" + this.outputFormat + " " + this.additionalOptions;
-  }
-
 }
 
 function validateFormat(control: AbstractControl): {[key: string]: any} | null {
