@@ -89,12 +89,11 @@ describe('OptionsComponent', () => {
 
   it('should update additional options string from text in additional options textbox', async () => {
     await fixture.whenStable();
-    const additionalOptionsTextBox = fixture.debugElement.query(By.css('.additionalOptions')).nativeElement;
+    const additionalOptionsHarness = await loader.getHarness(MatInputHarness.with(
+      {selector: '.additionalOptions'}));
 
-    additionalOptionsTextBox.value = "Additional options text";
-    additionalOptionsTextBox.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
+    await additionalOptionsHarness.setValue("Some additional options text");
 
-    expect(component.additionalOptions).toEqual("Additional options text");
+    expect(component.additionalOptions).toEqual("Some additional options text");
   });
 });
