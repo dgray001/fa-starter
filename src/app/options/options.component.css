@@ -17,7 +17,9 @@
 }
 
 .mat-card .additionalOptions {
-  flex-grow: 1;
+  background: rgb(200, 200, 200);
+  color: black;
+  height: 3em;
   resize: none;
   width: 100%;
 }
