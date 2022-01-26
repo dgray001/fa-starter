@@ -25,6 +25,7 @@ describe('OutputComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OutputComponent);
     component = fixture.componentInstance;
+    loader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
   });
 
