@@ -13,8 +13,8 @@ import { DataService } from '../data.service';
 export class OptionsComponent {
   formats: String[] = FORMATS;
   inputControl = new FormControl('', [Validators.required, validateFormat]);
-  inputFormat: string = "";
-  inputList: Observable<String[]> = this.inputControl.valueChanges.pipe(
+  inputFormat$: Observable<String> = this.dataService.inputFormat$;
+  inputList$: Observable<String[]> = this.inputControl.valueChanges.pipe(
     startWith(""),
     map(value => {
       return this.formats.filter(format => {
@@ -24,8 +24,8 @@ export class OptionsComponent {
     })
   );
   outputControl = new FormControl('', [Validators.required, validateFormat]);
-  outputFormat: string = "";
-  outputList: Observable<String[]> = this.outputControl.valueChanges.pipe(
+  outputFormat$: Observable<String> = this.dataService.outputFormat$;
+  outputList$: Observable<String[]> = this.outputControl.valueChanges.pipe(
     startWith(""),
     map(value => {
       return this.formats.filter(format => {
@@ -37,6 +37,10 @@ export class OptionsComponent {
   additionalOptions: string = "";
 
   constructor(private readonly dataService: DataService) {}
+
+  submit(): void {
+    console.log(this.inputFormat$.subscribe())
+  }
 }
 
 function validateFormat(control: AbstractControl): {[key: string]: any} | null {
