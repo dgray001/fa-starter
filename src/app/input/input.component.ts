@@ -8,9 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class InputComponent implements OnInit {
   inputString: string = "";
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }
