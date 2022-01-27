@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -9,6 +11,7 @@ import { FORMATS } from '../formatlist';
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.css']
 })
+@Injectable
 export class OptionsComponent implements OnInit {
   formats: String[] = FORMATS;
   inputControl = new FormControl('', [Validators.required, validateFormat]);
