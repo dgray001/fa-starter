@@ -37,7 +37,6 @@ app.secret_key = os.urandom(24)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>', methods=['POST', 'GET'])
 def serve_angular(path):
-  print("going to: " + path)
   if flask.current_app.config['DEBUG']:
     target = '/'.join([
       flask.current_app.config['ORIGIN'].rstrip('/'),
