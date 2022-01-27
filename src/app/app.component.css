@@ -1,10 +1,10 @@
-mat-card-content {
+.mat-card-content {
   display: flex;
   flex-direction: row;
   padding: 0.5rem;
 }
 
-.inputComponent .outputComponent {
+.inputComponent, .outputComponent {
   flex: 1;
   margin-right: 5px;
 }
