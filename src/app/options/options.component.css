@@ -2,8 +2,8 @@ mat-card-title {
   text-align: center;
 }
 mat-form-field {
-  margin: 0;
-  width: 100%;
-  max-width: 100%;
   box-sizing: border-box;
+  margin: 0;
+  max-width: 100%;
+  width: 100%;
 }
