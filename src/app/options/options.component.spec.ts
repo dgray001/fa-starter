@@ -8,6 +8,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 import { OptionsComponent } from './options.component';
 
@@ -94,6 +95,17 @@ describe('OptionsComponent', () => {
 
     await additionalOptionsHarness.setValue("Some additional options text");
 
-    expect(component.additionalOptions).toEqual("Some additional options text");
+    expect(component.inputData.additionalOptions).toEqual("Some additional options text");
+  });
+
+  it('should call submit() when submit is clicked', async () => {
+    await fixture.whenStable();
+    spyOn(component, 'submit');
+    const submitButtonHarness = await loader.getHarness(MatButtonHarness.with(
+      {selector: '.submit'}));
+
+    await submitButtonHarness.click();
+
+    expect(component.submit).toHaveBeenCalled();
   });
 });

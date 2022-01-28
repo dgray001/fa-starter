@@ -5,6 +5,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { of } from 'rxjs';
 
 import { OutputComponent } from './output.component';
 
@@ -33,13 +34,14 @@ describe('OutputComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update output string based on text in output textbox', async () => {
+  it('should display last output from outputString$ observable', async () => {
     await fixture.whenStable();
     const outputHarness = await loader.getHarness(MatInputHarness.with(
-      {selector: '.outputTextBox'}));
+      {selector: '.outputTextArea'}));
+    outputHarness.setValue("should not display");
 
-    await outputHarness.setValue("Some output text");
+    component.outputString$ = of("Some output text");
 
-    expect(component.outputString).toEqual("Some output text");
+    expect(await outputHarness.getValue()).toEqual("Some output text");
   });
 });
