@@ -31,12 +31,18 @@ else:
 app.secret_key = os.urandom(24)
 
 
+@app.route('/test')
+def test_route():
+    print("sending")
+    return "test";
+
 # A catch-all route to serve the angular app.
 # If no other routes match (such as /example) this will be called, and the
 # angular app will take over routing.
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>', methods=['POST', 'GET'])
 def serve_angular(path):
+  print(path)
   if flask.current_app.config['DEBUG']:
     target = '/'.join([
       flask.current_app.config['ORIGIN'].rstrip('/'),
