@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Observable, from } from 'rxjs';
+
 import { DataService } from '../data.service';
 
 @Component({
@@ -7,7 +9,7 @@ import { DataService } from '../data.service';
   styleUrls: ['./output.component.css']
 })
 export class OutputComponent {
-  outputString: string = "";
+  outputString$: Observable<String> = from(this.dataService.output);
 
   constructor(private readonly dataService: DataService) {}
 }

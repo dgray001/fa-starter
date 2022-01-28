@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>Options</mat-card-title>
-  <mat-form-field class="inputFormat" *ngIf="{ inputFormat: inputFormat$ | async } as inputFormat">
+  <mat-form-field class="inputFormat">
     <mat-label>Input Format</mat-label>
     <input
       matInput
@@ -10,7 +10,7 @@
       aria-label="Input Format"
       [formControl]="inputControl"
       [matAutocomplete]="inputAutocomplete"
-      [value]="inputFormat"
+      [(ngModel)]="inputData.inputFormat"
       required>
     <mat-error *ngIf="inputControl.invalid">Must choose a valid input format</mat-error>
     <mat-autocomplete class="inputAutocomplete" #inputAutocomplete autoActiveFirstOption panelWidth="auto">
@@ -20,7 +20,7 @@
     </mat-autocomplete>
   </mat-form-field>
   <div class="spacer"></div>
-  <mat-form-field class="outputFormat" *ngIf="{ outputFormat: outputFormat$ | async } as outputFormat">
+  <mat-form-field class="outputFormat">
     <mat-label>Output Format</mat-label>
     <input
       matInput
@@ -30,7 +30,7 @@
       aria-label="Output Format"
       [formControl]="outputControl"
       [matAutocomplete]="outputAutocomplete"
-      [value]="outputFormat"
+      [(ngModel)]="inputData.outputFormat"
       required>
     <mat-error *ngIf="outputControl.invalid">Must choose a valid output format</mat-error>
     <mat-autocomplete class="outputAutocomplete" #outputAutocomplete autoActiveFirstOption panelWidth="auto">
@@ -41,7 +41,7 @@
   </mat-form-field>
   <div class="spacer"></div>
   <div>Additional Options</div>
-  <textarea matInput class="additionalOptions" [(ngModel)]="additionalOptions"></textarea>
+  <textarea matInput class="additionalOptions" [(ngModel)]="inputData.additionalOptions"></textarea>
   <div class="spacer"></div>
   <div class="submit">
     <button type="submit" mat-raised-button (click)="submit()">Submit</button>
