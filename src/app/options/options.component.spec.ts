@@ -86,4 +86,14 @@ describe('OptionsComponent', () => {
     expect(options.length).toEqual(1);
     expect((await options[0].getText())).toEqual("test1");
   });
+
+  it('should update additional options string from text in additional options textbox', async () => {
+    await fixture.whenStable();
+    const additionalOptionsHarness = await loader.getHarness(MatInputHarness.with(
+      {selector: '.additionalOptions'}));
+
+    await additionalOptionsHarness.setValue("Some additional options text");
+
+    expect(component.additionalOptions).toEqual("Some additional options text");
+  });
 });

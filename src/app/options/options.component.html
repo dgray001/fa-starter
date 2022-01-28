@@ -10,14 +10,16 @@
       aria-label="Input Format"
       [formControl]="inputControl"
       [matAutocomplete]="inputAutocomplete"
+      [(ngModel)]="inputFormat"
       required>
     <mat-error *ngIf="inputControl.invalid">Must choose a valid input format</mat-error>
-    <mat-autocomplete class="inputAutocomplete" #inputAutocomplete autoActiveFirstOption panelWidth="auto">
+    <mat-autocomplete class="inputAutocomplete" #inputAutocomplete autoActiveFirstOption>
       <mat-option *ngFor="let format of inputList | async" [value]="format">
         {{format}}
       </mat-option>
     </mat-autocomplete>
-  </mat-form-field><br>
+  </mat-form-field>
+  <div class="spacer"></div>
   <mat-form-field class="outputFormat">
     <mat-label>Output Format</mat-label>
     <input
@@ -28,6 +30,7 @@
       aria-label="Output Format"
       [formControl]="outputControl"
       [matAutocomplete]="outputAutocomplete"
+      [(ngModel)]="outputFormat"
       required>
     <mat-error *ngIf="outputControl.invalid">Must choose a valid output format</mat-error>
     <mat-autocomplete class="outputAutocomplete" #outputAutocomplete autoActiveFirstOption panelWidth="auto">
@@ -36,4 +39,7 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
+  <div class="spacer"></div>
+  <div>Additional Options</div>
+  <textarea matInput class="additionalOptions" [(ngModel)]="additionalOptions"></textarea>
 </mat-card>

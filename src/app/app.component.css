@@ -1,6 +1,19 @@
+.app {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.content {
+  flex-grow: 1;
+  margin: 0px;
+  resize: none;
+}
+
 .mat-card-content {
   display: flex;
   flex-direction: row;
+  height: 100%;
   padding: 0.5rem;
 }
 

@@ -12,6 +12,7 @@ import { FORMATS } from '../formatlist';
 export class OptionsComponent implements OnInit {
   formats: String[] = FORMATS;
   inputControl = new FormControl('', [Validators.required, validateFormat]);
+  inputFormat: string = "";
   inputList: Observable<String[]> = this.inputControl.valueChanges.pipe(
     startWith(""),
     map(value => {
@@ -22,6 +23,7 @@ export class OptionsComponent implements OnInit {
     })
   );
   outputControl = new FormControl('', [Validators.required, validateFormat]);
+  outputFormat: string = "";
   outputList: Observable<String[]> = this.outputControl.valueChanges.pipe(
     startWith(""),
     map(value => {
@@ -31,11 +33,11 @@ export class OptionsComponent implements OnInit {
       });
     }),
   );
+  additionalOptions: string = "";
 
   constructor() {}
 
   ngOnInit(): void {}
-
 }
 
 function validateFormat(control: AbstractControl): {[key: string]: any} | null {
