@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, tap } from 'rxjs/operators';
+
 import { FORMATS } from '../formatlist';
 import { DataService } from '../data.service';
+import { InputData } from '../inputData';
 
 @Component({
   selector: 'app-options',
@@ -12,8 +14,8 @@ import { DataService } from '../data.service';
 })
 export class OptionsComponent {
   formats: String[] = FORMATS;
+  inputData: InputData = this.dataService.inputData;
   inputControl = new FormControl('', [Validators.required, validateFormat]);
-  inputFormat$: Observable<String> = this.dataService.inputFormat$;
   inputList$: Observable<String[]> = this.inputControl.valueChanges.pipe(
     startWith(""),
     map(value => {
@@ -24,7 +26,6 @@ export class OptionsComponent {
     })
   );
   outputControl = new FormControl('', [Validators.required, validateFormat]);
-  outputFormat$: Observable<String> = this.dataService.outputFormat$;
   outputList$: Observable<String[]> = this.outputControl.valueChanges.pipe(
     startWith(""),
     map(value => {
@@ -34,12 +35,11 @@ export class OptionsComponent {
       });
     }),
   );
-  additionalOptions: string = "";
 
   constructor(private readonly dataService: DataService) {}
 
   submit(): void {
-    console.log(this.inputFormat$.subscribe())
+    this.dataService.submit();
   }
 }
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from '../data.service';
+import { InputData } from '../inputData';
 
 @Component({
   selector: 'app-input',
@@ -7,7 +8,7 @@ import { DataService } from '../data.service';
   styleUrls: ['./input.component.css']
 })
 export class InputComponent {
-  inputString: string = "";
+  inputData: InputData = this.dataService.inputData;
 
   constructor(private readonly dataService: DataService) {}
 }

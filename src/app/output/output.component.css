@@ -6,6 +6,12 @@
 }
 
 .mat-card .outputTextBox {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.mat-card .outputTextBox .outputTextArea {
   background: rgb(200, 200, 200);
   color: black;
   flex-grow: 1;

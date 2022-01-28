@@ -1,4 +1,6 @@
 <mat-card>
   <mat-card-title>Output</mat-card-title>
-  <textarea matInput class="outputTextBox" [(ngModel)]="outputString"></textarea>
+  <div class="outputTextBox" *ngIf="{output: outputString$ | async} as outputString">
+    <textarea class="outputTextArea" atInput [value]="outputString.output"></textarea>
+  </div>
 </mat-card>
