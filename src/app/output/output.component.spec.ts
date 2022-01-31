@@ -34,14 +34,13 @@ describe('OutputComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display last output from outputString$ observable', async () => {
+  it('should update output string based on text in output textbox', async () => {
     await fixture.whenStable();
     const outputHarness = await loader.getHarness(MatInputHarness.with(
       {selector: '.outputTextArea'}));
-    outputHarness.setValue("should not display");
 
-    component.outputString$ = of("Some output text");
+    await outputHarness.setValue("Some output text");
 
-    expect(await outputHarness.getValue()).toEqual("Some output text");
+    expect(component.outputString).toEqual("Some output text");
   });
 });
