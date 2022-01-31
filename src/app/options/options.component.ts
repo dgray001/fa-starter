@@ -3,6 +3,7 @@ import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FORMATS } from '../formatlist';
+import { SubmitService } from '../submit.service';
 
 @Component({
   selector: 'app-options',
@@ -35,7 +36,7 @@ export class OptionsComponent implements OnInit {
   );
   additionalOptions: string = "";
 
-  constructor() {}
+  constructor(private readonly service: SubmitService) {}
 
   ngOnInit(): void {}
 }

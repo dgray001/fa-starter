@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubmitService } from '../submit.service';
 
 @Component({
   selector: 'app-output',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class OutputComponent implements OnInit {
   outputString: string = "";
 
-  constructor() {}
+  constructor(private readonly service: SubmitService) {}
 
   ngOnInit(): void {}
 
