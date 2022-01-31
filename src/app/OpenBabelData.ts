@@ -1,4 +1,4 @@
-export interface OpenBabelInterface {
+export interface OpenBabelData {
   inputString: String;
   inputFormat: String;
   outputFormat: String;
