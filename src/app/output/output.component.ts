@@ -9,7 +9,6 @@ import { DataService } from '../data.service';
   styleUrls: ['./output.component.css']
 })
 export class OutputComponent {
-  outputString$: Observable<String> = from(this.dataService.output);
 
   constructor(private readonly dataService: DataService) {}
 }

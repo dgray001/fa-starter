@@ -8,7 +8,6 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,8 +27,7 @@ import { OptionsComponent } from './options/options.component';
     HttpClientModule,
     MatAutocompleteModule,
     MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule
+    MatFormFieldModule
   ],
   providers: [
     {

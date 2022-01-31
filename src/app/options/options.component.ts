@@ -37,10 +37,6 @@ export class OptionsComponent {
   );
 
   constructor(private readonly dataService: DataService) {}
-
-  submit(): void {
-    this.dataService.submit();
-  }
 }
 
 function validateFormat(control: AbstractControl): {[key: string]: any} | null {
