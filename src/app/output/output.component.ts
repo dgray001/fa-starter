@@ -9,7 +9,7 @@ import { DataService } from '../data.service';
   styleUrls: ['./output.component.css']
 })
 export class OutputComponent {
-  outputString$: Obesrvable<String> = this.dataService.ouput;
+  outputString$: Observable<String> = this.dataService.output;
 
   constructor(private readonly dataService: DataService) {}
 }
