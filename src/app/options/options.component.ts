@@ -37,6 +37,10 @@ export class OptionsComponent {
   additionalOptions: string = "";
 
   constructor(private readonly service: SubmitService) {}
+
+  submit(): void {
+    this.service.submit();
+  }
 }
 
 function validateFormat(control: AbstractControl): {[key: string]: any} | null {
