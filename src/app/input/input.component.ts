@@ -8,7 +8,7 @@ import { InputData } from '../inputData';
   styleUrls: ['./input.component.css']
 })
 export class InputComponent {
-  inputData: InputData = this.dataService.inputData;
+  inputString: String = "";
 
   constructor(private readonly dataService: DataService) {}
 }
