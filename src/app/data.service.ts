@@ -11,4 +11,7 @@ export class DataService {
   inputData: InputData = { input: "", inputFormat: "", outputFormat: "", additionalOptions: "" };
 
   constructor() {}
+
+  submit(): void {
+  }
 }
