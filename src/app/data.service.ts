@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { startWith, shareReplay } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 import { InputData } from './inputData';
 
@@ -9,8 +10,9 @@ import { InputData } from './inputData';
 })
 export class DataService {
   inputData: InputData = { input: "", inputFormat: "", outputFormat: "", additionalOptions: "" };
+  output: BehaviorSubject<String>= new BehaviorSubject<String>("");
 
-  constructor() {}
+  constructor(private readonly http: HttpClient) {}
 
   submit(): void {
   }
