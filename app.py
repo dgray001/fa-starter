@@ -5,11 +5,14 @@ from flask import request
 import flask_cors
 from dotenv import load_dotenv
 
+import submit
+
 load_dotenv()
 
 # Set up the static folder to serve our angular client resources (*.js, *.css)
 app = flask.Flask(__name__,
                   static_folder='dist/client', static_url_path='/client')
+app.register_blueprint(submit.blueprint)
 
 # If we're running in debug, defer to the typescript development server
 # This gets us things like live reload and better sourcemaps.
