@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 import { OpenBabelData } from './OpenBabelData';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubmitService {
-  readonly submitUrl: string = "/submit";
+  readonly submitUrl: string = "/example/ping";
   data: OpenBabelData = {inputString: "", inputFormat: "", outputFormat: "",
     additionalOptions: ""};
 
   constructor(private readonly http: HttpClient) {}
 
-  submit(): Observable<OpenBabelData> {
-    return this.http.patch<OpenBabelData>(this.submitUrl, this.data);
+  submit(): Observable<String> {
+    return this.http.patch<String>(this.submitUrl, this.data.inputString);
   }
 }

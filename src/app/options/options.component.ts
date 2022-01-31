@@ -39,7 +39,7 @@ export class OptionsComponent {
   constructor(private readonly service: SubmitService) {}
 
   submit(): void {
-    this.service.submit();
+    console.log(this.service.submit().subscribe());
   }
 }
 
