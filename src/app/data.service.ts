@@ -14,6 +14,8 @@ export class DataService {
 
   constructor(private readonly http: HttpClient) {}
 
-  submit(): void {
+  submit(): Observable<String> {
+    inputString: String = "test";
+    return this.http.patch('../submit', inputString);
   }
 }
