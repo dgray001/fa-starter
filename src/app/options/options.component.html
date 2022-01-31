@@ -10,7 +10,7 @@
       aria-label="Input Format"
       [formControl]="inputControl"
       [matAutocomplete]="inputAutocomplete"
-      [(ngModel)]="inputData.inputFormat"
+      [(ngModel)]="inputFormat"
       required>
     <mat-error *ngIf="inputControl.invalid">Must choose a valid input format</mat-error>
     <mat-autocomplete class="inputAutocomplete" #inputAutocomplete autoActiveFirstOption panelWidth="auto">
@@ -30,7 +30,7 @@
       aria-label="Output Format"
       [formControl]="outputControl"
       [matAutocomplete]="outputAutocomplete"
-      [(ngModel)]="inputData.outputFormat"
+      [(ngModel)]="outputFormat"
       required>
     <mat-error *ngIf="outputControl.invalid">Must choose a valid output format</mat-error>
     <mat-autocomplete class="outputAutocomplete" #outputAutocomplete autoActiveFirstOption panelWidth="auto">

@@ -94,7 +94,7 @@ describe('OptionsComponent', () => {
 
     await additionalOptionsHarness.setValue("Some additional options text");
 
-    expect(component.inputData.additionalOptions).toEqual("Some additional options text");
+    expect(component.additionalOptions).toEqual("Some additional options text");
   });
 
 });
