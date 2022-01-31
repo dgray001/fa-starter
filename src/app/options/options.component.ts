@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { SubmitService } from '../submit.service';
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.css']
 })
-export class OptionsComponent implements OnInit {
+export class OptionsComponent {
   formats: String[] = FORMATS;
   inputControl = new FormControl('', [Validators.required, validateFormat]);
   inputFormat: string = "";
@@ -37,8 +37,6 @@ export class OptionsComponent implements OnInit {
   additionalOptions: string = "";
 
   constructor(private readonly service: SubmitService) {}
-
-  ngOnInit(): void {}
 }
 
 function validateFormat(control: AbstractControl): {[key: string]: any} | null {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SubmitService } from '../submit.service';
 
 @Component({
@@ -6,11 +6,8 @@ import { SubmitService } from '../submit.service';
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css']
 })
-export class InputComponent implements OnInit {
+export class InputComponent {
   inputString: string = "";
 
   constructor(private readonly service: SubmitService) {}
-
-  ngOnInit(): void {}
-
 }
