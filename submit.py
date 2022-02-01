@@ -1,11 +1,12 @@
 import os
 
 import flask
-import requests
+from flask import request
 
 blueprint = flask.Blueprint('submit', __name__, url_prefix="/submit")
 
 @blueprint.route("/test/", methods=['PATCH'])
 def test():
-    print(request.form)
+    req = request.form
+    print(form.get("inputString"))
     return "hello"
