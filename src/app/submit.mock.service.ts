@@ -16,7 +16,7 @@ export class MockSubmitService {
   submit(): Observable<OpenBabelData> {
     const mockData: Observable<OpenBabelData> = of({inputString: "CCCCOc1ccccc1",
       inputFormat: "SMI", outputFormat: "MOL", additionalOptions: "--gen2D", output: `
-       OpenBabel02012200552D
+       OpenBabel02012223112D
 
        11 11  0  0  0  0  0  0  0  0999 V2000
           4.3301   -1.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
