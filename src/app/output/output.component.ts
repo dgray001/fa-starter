@@ -7,7 +7,7 @@ import { SubmitService } from '../submit.service';
   styleUrls: ['./output.component.css']
 })
 export class OutputComponent {
-  outputString?: String = this.service.data.output;
+  data = this.service.data;
 
   constructor(private readonly service: SubmitService) {}
 

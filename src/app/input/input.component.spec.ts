@@ -41,6 +41,6 @@ describe('InputComponent', () => {
 
     await inputHarness.setValue("Some input text");
 
-    expect(component.inputString).toEqual("Some input text");
+    expect(component.data.inputString).toEqual("Some input text");
   });
 });

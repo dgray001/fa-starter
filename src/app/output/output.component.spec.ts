@@ -41,6 +41,6 @@ describe('OutputComponent', () => {
 
     await outputHarness.setValue("Some output text");
 
-    expect(component.outputString).toEqual("Some output text");
+    expect(component.data.output).toEqual("Some output text");
   });
 });
