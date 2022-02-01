@@ -48,8 +48,7 @@ export class OptionsComponent implements AfterViewInit{
           of(true),
           of(true).pipe(
             mergeMap(() => this.service.submit()), mapTo(false)
-          ),
-          of(false)
+          )
         )
       }), startWith(false)
     );
