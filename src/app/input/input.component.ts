@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 
 import { OpenBabelData } from '../OpenBabelData';
 import { SubmitService } from '../submit.service';
-import { OpenBabelData } from '../OpenBabelData';
 
 @Component({
   selector: 'app-input',
