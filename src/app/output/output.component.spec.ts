@@ -5,6 +5,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { OutputComponent } from './output.component';
 
@@ -16,7 +17,7 @@ describe('OutputComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      imports: [ FormsModule ],
+      imports: [ FormsModule, HttpClientTestingModule ],
       declarations: [ OutputComponent ]
     })
     .compileComponents();

@@ -8,7 +8,7 @@ import { OpenBabelData } from './OpenBabelData';
   providedIn: 'root'
 })
 export class SubmitService {
-  readonly submitUrl: String = "/submit/";
+  readonly submitUrl: string = "/submit/";
   data: OpenBabelData = {inputString: "", inputFormat: "", outputFormat: "",
     additionalOptions: ""};
 

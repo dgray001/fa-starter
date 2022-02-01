@@ -8,6 +8,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { OptionsComponent } from './options.component';
 
@@ -19,7 +20,7 @@ describe('OptionsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      imports: [ FormsModule, ReactiveFormsModule, MatAutocompleteModule ],
+      imports: [ FormsModule, ReactiveFormsModule, MatAutocompleteModule, HttpClientTestingModule ],
       declarations: [ OptionsComponent ]
     })
     .compileComponents();

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { OpenBabelData } from './OpenBabelData';
@@ -7,17 +6,17 @@ import { OpenBabelData } from './OpenBabelData';
 @Injectable({
   providedIn: 'root'
 })
-export class SubmitService {
-  readonly submitUrl: String = "/submit/";
+export class MockSubmitService {
+  readonly submitUrl: string = "/submit/";
   data: OpenBabelData = {inputString: "", inputFormat: "", outputFormat: "",
     additionalOptions: ""};
 
-  constructor(private readonly http: HttpClient) {}
+  constructor() {}
 
   submit(): Observable<OpenBabelData> {
-    let mockData:OpenBabelData = {inputString: "CCCCOc1ccccc1", inputFormat: "SMI",
-      outputFormat: "MOL", additionalOptions: "--gen2D", output: "
-       OpenBabel02012200392D
+    const mockData: Observable<OpenBabelData> = of({inputString: "CCCCOc1ccccc1",
+      inputFormat: "SMI", outputFormat: "MOL", additionalOptions: "--gen2D", output: `
+       OpenBabel02012200552D
 
        11 11  0  0  0  0  0  0  0  0999 V2000
           4.3301   -1.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
@@ -43,7 +42,7 @@ export class SubmitService {
         9 10  1  0  0  0  0
        10 11  2  0  0  0  0
       M  END
-      "};
-    return
+      `});
+    return mockData;
   }
 }
