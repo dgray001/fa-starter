@@ -13,7 +13,7 @@ import { SubmitService } from '../submit.service';
 export class OptionsComponent {
   formats: String[] = FORMATS;
   inputControl = new FormControl('', [Validators.required, validateFormat]);
-  inputFormat: string = "";
+  inputFormat: String = this.service.data.inputFormat;
   inputList: Observable<String[]> = this.inputControl.valueChanges.pipe(
     startWith(""),
     map(value => {
@@ -24,7 +24,7 @@ export class OptionsComponent {
     })
   );
   outputControl = new FormControl('', [Validators.required, validateFormat]);
-  outputFormat: string = "";
+  outputFormat: String = this.service.data.outputFormat;
   outputList: Observable<String[]> = this.outputControl.valueChanges.pipe(
     startWith(""),
     map(value => {
@@ -34,7 +34,7 @@ export class OptionsComponent {
       });
     }),
   );
-  additionalOptions: string = "";
+  additionalOptions: String = this.service.data.additionalOptions;
 
   constructor(private readonly service: SubmitService) {}
 }

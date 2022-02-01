@@ -7,10 +7,8 @@ import { SubmitService } from '../submit.service';
   styleUrls: ['./output.component.css']
 })
 export class OutputComponent {
-  outputString: string = "";
+  outputString?: String = this.service.data.output;
 
   constructor(private readonly service: SubmitService) {}
-
-  ngOnInit(): void {}
 
 }
