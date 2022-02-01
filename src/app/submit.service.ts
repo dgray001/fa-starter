@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject, from, OperatorFunction, pipe } from 'rxjs';
-import { mergeMap, catchError, tap, delay, shareReplay, withLatestFrom } from 'rxjs/operators';
+import { mergeMap, catchError, tap, shareReplay, withLatestFrom } from 'rxjs/operators';
 import { OpenBabelData } from './OpenBabelData';
 
 @Injectable({
