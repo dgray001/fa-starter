@@ -12,7 +12,7 @@ import { SubmitService } from '../submit.service';
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.css']
 })
-export class OptionsComponent implements AfterViewInit{
+export class OptionsComponent implements AfterViewInit {
   formats: String[] = FORMATS;
   data$: Observable<OpenBabelData> = this.service.data$;
   inputControl = new FormControl('', [Validators.required, validateFormat]);
