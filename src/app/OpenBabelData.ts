@@ -1,8 +1,8 @@
 export interface OpenBabelData {
-  inputString: string;
-  inputFormat: string;
-  outputFormat: string;
-  additionalOptions: string;
-  output?: string;
-  log?: string;
+  inputString: String;
+  inputFormat: String;
+  outputFormat: String;
+  additionalOptions: String;
+  output?: String;
+  log?: String;
 }
