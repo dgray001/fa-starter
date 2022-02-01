@@ -37,7 +37,7 @@ export class OptionsComponent implements AfterViewInit{
   );
   additionalOptions: String = this.service.data.additionalOptions;
   submit$: Observable<boolean> = of(false);
-  @ViewChild('submit', {read: ElementRef}) submitButton: ElementRef;
+  @ViewChild('submitButton', {read: ElementRef}) submitButton: ElementRef;
 
   constructor(private readonly service: SubmitService) {}
 
