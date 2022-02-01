@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Observable, fromEvent, of, concat } from 'rxjs';
+import { map, startWith, mergeMap, mapTo, tap } from 'rxjs/operators';
 
 import { OpenBabelData } from '../OpenBabelData';
 import { FORMATS } from '../formatlist';
@@ -12,7 +12,7 @@ import { SubmitService } from '../submit.service';
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.css']
 })
-export class OptionsComponent {
+export class OptionsComponent implements AfterViewInit{
   formats: String[] = FORMATS;
   data$: Observable<OpenBabelData> = this.service.data$;
   inputControl = new FormControl('', [Validators.required, validateFormat]);
@@ -35,8 +35,25 @@ export class OptionsComponent {
       });
     }),
   );
+  additionalOptions: String = this.service.data.additionalOptions;
+  submit$: Observable<boolean> = of(false);
+  @ViewChild('submit', {read: ElementRef}) submitButton: ElementRef;
 
   constructor(private readonly service: SubmitService) {}
+
+  ngAfterViewInit() {
+    this.submit$ = fromEvent(this.submitButton.nativeElement, 'click').pipe(
+      mergeMap(() => {
+        return concat(
+          of(true),
+          of(true).pipe(
+            mergeMap(() => this.service.submit()), mapTo(false)
+          ),
+          of(false)
+        )
+      }), startWith(false)
+    );
+  }
 }
 
 function validateFormat(control: AbstractControl): {[key: string]: any} | null {

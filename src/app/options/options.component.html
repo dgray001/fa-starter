@@ -43,7 +43,7 @@
   <div>Additional Options</div>
   <textarea matInput class="additionalOptions" [(ngModel)]="data.additionalOptions"></textarea>
   <div class="spacer"></div>
-  <div class="submit">
-    <button mat-raised-button type="submit">Submit</button>
+  <div class="submit" #submit>
+    <button mat-raised-button type="submit" [disabled]="submit$ | async">Submit</button>
   </div>
 </mat-card>
