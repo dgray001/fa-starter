@@ -8,13 +8,13 @@ import { OpenBabelData } from './OpenBabelData';
   providedIn: 'root'
 })
 export class SubmitService {
-  readonly submitUrl: string = "/example/ping";
+  readonly submitUrl: String = "/submit/";
   data: OpenBabelData = {inputString: "", inputFormat: "", outputFormat: "",
     additionalOptions: ""};
 
   constructor(private readonly http: HttpClient) {}
 
-  submit(): Observable<String> {
-    return this.http.patch<String>(this.submitUrl, this.data.inputString);
+  submit(): Observable<OpenBabelData> {
+    return this.http.patch<OpenBabelData>(this.submitUrl, this.data.inputString);
   }
 }
