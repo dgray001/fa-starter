@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { OpenBabelData } from '../OpenBabelData';
 import { DataService } from '../submit.abstract.service';
 
 @Component({
