@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { DataService } from '../submit.abstract.service';
+import { OpenBabelData } from '../OpenBabelData';
+import { SubmitService } from '../submit.service';
 
 @Component({
   selector: 'app-input',
