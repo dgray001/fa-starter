@@ -21,12 +21,8 @@ describe('MockSubmitService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return of type OpenBabelData when submit() is called', async () => {
-    let output;
-
-    await service.submit().pipe(
-      tap((data) => output = data)
-    ).toPromise();
+  it('should return an OpenBabelData observable when submit() is called', async () => {
+    const output = await service.submit().toPromise();
 
     expect(output.inputString).toEqual("CCCCOc1ccccc1");
     expect(output.inputFormat).toEqual("SMI");
