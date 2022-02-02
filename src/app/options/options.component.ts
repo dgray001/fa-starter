@@ -36,13 +36,13 @@ export class OptionsComponent implements AfterViewInit {
     }),
   );
   additionalOptions: String = this.service.data.additionalOptions;
-  submit$: Observable<boolean> = of(false);
+  submitting$: Observable<boolean> = of(false);
   @ViewChild('submitButton', {read: ElementRef}) submitButton: ElementRef;
 
   constructor(private readonly service: SubmitService) {}
 
   ngAfterViewInit() {
-    this.submit$ = fromEvent(this.submitButton.nativeElement, 'click').pipe(
+    this.submitting$ = fromEvent(this.submitButton.nativeElement, 'click').pipe(
       mergeMap(() => {
         return concat(
           of(true),
