@@ -26,8 +26,7 @@ export class SubmitService {
       )),
       catchError(this.handleError<OpenBabelData>('submit', this.blankData))
     );
-
-  constructor(private readonly http: HttpClient) {}
+  }
 
   private handleError<T>(operation = 'operation', result: T) {
     return (error: any): Observable<T> => {

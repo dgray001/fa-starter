@@ -35,7 +35,6 @@ export class OptionsComponent implements AfterViewInit {
       });
     }),
   );
-  additionalOptions: String = this.service.data.additionalOptions;
   submitting$: Observable<boolean> = of(false);
   @ViewChild('submitButton', {read: ElementRef}) submitButton: ElementRef;
 
@@ -46,9 +45,7 @@ export class OptionsComponent implements AfterViewInit {
       mergeMap(() => {
         return concat(
           of(true),
-          of(true).pipe(
-            mergeMap(() => this.service.submit()), mapTo(false)
-          )
+          of(true).pipe(this.service.submit(), mapTo(false))
         )
       }), startWith(false)
     );
