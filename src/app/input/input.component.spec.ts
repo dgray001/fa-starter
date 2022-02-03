@@ -6,13 +6,18 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
+import { OpenBabelData } from '../OpenBabelData';
 import { InputComponent } from './input.component';
 
 describe('InputComponent', () => {
   let component: InputComponent;
   let fixture: ComponentFixture<InputComponent>;
   let loader: HarnessLoader;
+  const blankData: OpenBabelData = {inputString: "",
+    inputFormat: "", outputFormat: "", additionalOptions: ""};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -34,13 +39,16 @@ describe('InputComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update input string based on text in input textbox', async () => {
+  it('should update data$ observable from input in input box', async () => {
     await fixture.whenStable();
     const inputHarness = await loader.getHarness(MatInputHarness.with(
       {selector: '.inputTextBox'}));
+    let data: OpenBabelData = blankData;
+    component.data$ = of(blankData).pipe(tap((thisData) => data = thisData));
+    expect(data['inputString']).toEqual("");
 
     await inputHarness.setValue("Some input text");
 
-    expect(component.data.inputString).toEqual("Some input text");
+    expect(data['inputString']).toEqual("Some input text");
   });
 });
