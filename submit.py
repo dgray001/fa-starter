@@ -1,21 +1,34 @@
 import os
+import sys
+import paramiko
 
 import flask
 from flask import request
 
-#import google.cloud_v1 as compute_v1
+from base64 import decodebytes
 
 blueprint = flask.Blueprint('submit', __name__, url_prefix="/submit")
 
-blankData = {"inputString": "input", "inputFormat": "inputFormat", "outputFormat": "outputFormat", "additionalOptions": "flags", "output": "output", "log": ""}
+ip = "34.125.77.241" # external computeengine ip
+#ip = "10.182.0.2" # internal computeengine ip
+keyPath = "./google_compute_engine.pub"
+ssh_protocol = "ssh-rsa"
 
+
+#key = paramiko.RSAKey.from_private_key(paramiko.pkey.PKey(data=decodebytes(keyData)))
+key = paramiko.RSAKey(data=decodebytes(keyData))
 projectId = "personal-fa-starter-app"
 zone = "us-west4-b"
 
-@blueprint.route("/test/", methods=['PATCH'])
+@blueprint.route("/", methods=['PATCH'])
 def test():
     req = request.get_json()
     print(req)
- #   instance_client = compute_v1.InstanceClient()
+
+    ssh_client = paramiko.SSHClient()
+    ssh_client.get_host_keys().add(ip, ssh_protocol, key)
+    ssh_client.connect(ip, username="client", key_filename=keyPath)
+    #ssh_client.connect(ip)
+    stdin, stdout, stderr = ssh_client.exec_command("ls")
 
     return req
