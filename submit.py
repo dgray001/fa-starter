@@ -24,6 +24,17 @@ def test():
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.connect(ip, username="yodan", password="", key_filename=keyPath)
-    stdin, stdout, stderr = ssh_client.exec_command("ls")
+    stdin, stdout, stderr = ssh_client.exec_command("cd obabel_jobs")
+    stdin, stdout, stderr = ssh_client.exec_command("obabel")
 
+    ftp = ssh_client.open_sftp()
+    inputFile = ftp.file('test', 'a', -1)
+    inputFile.flush()
+    ftp.close()
+
+    ssh_client.close()
+
+    req['output'] = stdout.read().decode()
+    req['inputString'] = "hello world"
+    print(req)
     return req
