@@ -34,7 +34,6 @@ def test():
 
     ssh_client.close()
 
-    req['output'] = stdout.read().decode()
-    req['inputString'] = "hello world"
+    req['output'] = str(req) + "\n\n" + stdout.read().decode()
     print(req)
     return req
