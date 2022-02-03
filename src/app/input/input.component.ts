@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { OpenBabelData } from '../OpenBabelData';
 import { SubmitService } from '../submit.service';
 
 @Component({
@@ -7,7 +10,7 @@ import { SubmitService } from '../submit.service';
   styleUrls: ['./input.component.css']
 })
 export class InputComponent {
-  data = this.service.data;
+  data$: Observable<OpenBabelData> = this.service.data$;
 
   constructor(private readonly service: SubmitService) {}
 }

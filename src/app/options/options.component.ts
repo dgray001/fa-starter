@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
+import { OpenBabelData } from '../OpenBabelData';
 import { FORMATS } from '../formatlist';
 import { SubmitService } from '../submit.service';
 
@@ -12,7 +14,7 @@ import { SubmitService } from '../submit.service';
 })
 export class OptionsComponent {
   formats: String[] = FORMATS;
-  data = this.service.data;
+  data$: Observable<OpenBabelData> = this.service.data$;
   inputControl = new FormControl('', [Validators.required, validateFormat]);
   inputList: Observable<String[]> = this.inputControl.valueChanges.pipe(
     startWith(""),
