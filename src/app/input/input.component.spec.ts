@@ -43,12 +43,14 @@ describe('InputComponent', () => {
     await fixture.whenStable();
     const inputHarness = await loader.getHarness(MatInputHarness.with(
       {selector: '.inputTextBox'}));
-    let data: OpenBabelData = blankData;
-    component.data$ = of(blankData).pipe(tap((thisData) => data = thisData));
-    expect(data['inputString']).toEqual("");
+    component.data$.subscribe(
+      data => expect(data['inputString']).toEqual("")
+    );
 
     await inputHarness.setValue("Some input text");
 
-    expect(data['inputString']).toEqual("Some input text");
+    component.data$.subscribe(
+      data => expect(data['inputString']).toEqual("Some input text")
+    );
   });
 });
