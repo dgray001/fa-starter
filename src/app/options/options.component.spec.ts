@@ -8,18 +8,24 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
+import { OpenBabelData } from '../OpenBabelData';
 import { OptionsComponent } from './options.component';
 
 describe('OptionsComponent', () => {
   let component: OptionsComponent;
   let fixture: ComponentFixture<OptionsComponent>;
   let loader: HarnessLoader;
+  const blankData: OpenBabelData = {inputString: "",
+    inputFormat: "", outputFormat: "", additionalOptions: ""};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      imports: [ FormsModule, ReactiveFormsModule, MatAutocompleteModule ],
+      imports: [ FormsModule, ReactiveFormsModule, MatAutocompleteModule, HttpClientTestingModule ],
       declarations: [ OptionsComponent ]
     })
     .compileComponents();
@@ -87,13 +93,18 @@ describe('OptionsComponent', () => {
     expect((await options[0].getText())).toEqual("test1");
   });
 
-  it('should update additional options string from text in additional options textbox', async () => {
+  it('should update data$ observable from additional options string', async () => {
     await fixture.whenStable();
     const additionalOptionsHarness = await loader.getHarness(MatInputHarness.with(
       {selector: '.additionalOptions'}));
 
+    component.data$.subscribe(
+      data => expect(data['additionalOptions']).toEqual("")
+    );
     await additionalOptionsHarness.setValue("Some additional options text");
 
-    expect(component.additionalOptions).toEqual("Some additional options text");
+    component.data$.subscribe(
+      data => expect(data['additionalOptions']).toEqual("Some additional options text")
+    );
   });
 });

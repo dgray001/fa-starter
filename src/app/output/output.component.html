@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="data$ | async as data">
   <mat-card-title>Output</mat-card-title>
-  <textarea matInput class="outputTextBox" [(ngModel)]="outputString"></textarea>
+  <textarea matInput class="outputTextBox" [(ngModel)]="data.output"></textarea>
 </mat-card>

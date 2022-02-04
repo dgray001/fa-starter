@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { OpenBabelData } from '../OpenBabelData';
+import { SubmitService } from '../submit.service';
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css']
 })
-export class InputComponent implements OnInit {
-  inputString: string = "";
+export class InputComponent {
+  data$: Observable<OpenBabelData> = this.service.data$;
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
+  constructor(private readonly service: SubmitService) {}
 }

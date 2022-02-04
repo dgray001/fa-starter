@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
+import { OpenBabelData } from '../OpenBabelData';
 import { FORMATS } from '../formatlist';
+import { SubmitService } from '../submit.service';
 
 @Component({
   selector: 'app-options',
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.css']
 })
-export class OptionsComponent implements OnInit {
+export class OptionsComponent {
   formats: String[] = FORMATS;
+  data$: Observable<OpenBabelData> = this.service.data$;
   inputControl = new FormControl('', [Validators.required, validateFormat]);
-  inputFormat: string = "";
   inputList: Observable<String[]> = this.inputControl.valueChanges.pipe(
     startWith(""),
     map(value => {
@@ -23,7 +26,6 @@ export class OptionsComponent implements OnInit {
     })
   );
   outputControl = new FormControl('', [Validators.required, validateFormat]);
-  outputFormat: string = "";
   outputList: Observable<String[]> = this.outputControl.valueChanges.pipe(
     startWith(""),
     map(value => {
@@ -33,11 +35,8 @@ export class OptionsComponent implements OnInit {
       });
     }),
   );
-  additionalOptions: string = "";
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  constructor(private readonly service: SubmitService) {}
 }
 
 function validateFormat(control: AbstractControl): {[key: string]: any} | null {
