@@ -8,7 +8,6 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -114,31 +113,6 @@ describe('OptionsComponent', () => {
 
     submit.click();
     fixture.detectChanges();
-
-    expect(component['service'].submit).toHaveBeenCalled();
-  });
-
-  it('should call service.submit when submit button is pressed', async () => {
-    await fixture.whenStable();
-    spyOn<any>(component['service'], 'submit');
-    const submit = fixture.debugElement.query(By.css('.submitButton')).nativeElement;
-
-    submit.click();
-    fixture.detectChanges();
-
-    expect(component['service'].submit).toHaveBeenCalled();
-  });
-
-  it('should call service.submit when submit button is pressed', async () => {
-    await fixture.whenStable();
-    spyOn<any>(component['service'], 'submit');
-    const submitButtonHarness = await loader.getHarness(MatButtonHarness.with(
-      {selector: '.submitButton'}))
-    const submit = fixture.debugElement.query(By.css('.submitButton')).nativeElement;
-
-    submit.click();
-    fixture.detectChanges();
-    // await submitButtonHarness.click();
 
     expect(component['service'].submit).toHaveBeenCalled();
   });
