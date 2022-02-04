@@ -46,7 +46,7 @@ export class OptionsComponent implements AfterViewInit {
         return concat(
           of(true),
           of(true).pipe(this.service.submit(), mapTo(false))
-        )
+        );
       }), startWith(false)
     );
   }
