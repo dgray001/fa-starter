@@ -38,6 +38,21 @@ export class OptionsComponent implements AfterViewInit {
   submitting$: Observable<boolean> = of(false);
   disabled$: Observable<boolean> = of(true);
   @ViewChild('submitButton', {read: ElementRef}) submitButton: ElementRef;
+  canSubmit$: Observable<boolean> = combineLatest(this.inputControl.valueChanges,
+    this.outputControl.valueChanges, this.submit$).pipe(
+      map(([inControl, outControl, submitting]) => {
+        if (inControl.invalid) {
+          return false;
+        }
+        if (outControl.invalid) {
+          return false;
+        }
+        if (submitting) {
+          return false;
+        }
+        return true;
+      })
+    );
 
   constructor(readonly service: DataService) {}
 
