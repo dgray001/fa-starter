@@ -19,21 +19,35 @@ zone = "us-west4-b"
 @blueprint.route("/", methods=['PATCH'])
 def test():
     req = request.get_json()
-    print(req)
+    inputFormat = req['inputFormat'].split('--')[0].strip()
+    outputFormat = req['outputFormat'].split('--')[0].strip()
+    inputFilename = "job/input." + inputFormat
+    obabelCommand = "obabel -i " + inputFormat + " " + inputFilename + " -o " + outputFormat + " " + req['additionalOptions']
 
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.connect(ip, username="yodan", password="", key_filename=keyPath)
-    stdin, stdout, stderr = ssh_client.exec_command("cd obabel_jobs")
-    stdin, stdout, stderr = ssh_client.exec_command("obabel")
+    ssh_client.exec_command("mkdir job")
 
     ftp = ssh_client.open_sftp()
-    inputFile = ftp.file('test', 'a', -1)
+    inputFile = ftp.file(inputFilename, 'w')
+    inputFile.write(req['inputString'])
     inputFile.flush()
     ftp.close()
 
+    stdin, stdout, stderr = ssh_client.exec_command(obabelCommand)
+    out_exit_status = stdout.channel.recv_exit_status()
+    output = stdout.read().decode()
+    error = stderr.read().decode()
+    if out_exit_status == 0:
+        if "0 molecules converted" in error:
+            req['output'] = error + "\n\n" + output
+        else:
+            req['output'] = output
+    else:
+        req['output'] = error + "\n\n" + output
+
+    ssh_client.exec_command("rm -r job/")
     ssh_client.close()
 
-    req['output'] = str(req) + "\n\n" + stdout.read().decode()
-    print(req)
     return req
