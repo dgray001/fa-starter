@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
-import { Observable, fromEvent, of, concat, combineLatest } from 'rxjs';
+import { Observable, fromEvent, of, concat } from 'rxjs';
 import { map, startWith, mergeMap, mapTo, tap } from 'rxjs/operators';
 
 import { OpenBabelData } from '../OpenBabelData';

@@ -17,7 +17,7 @@ projectId = "personal-fa-starter-app"
 zone = "us-west4-b"
 
 @blueprint.route("/", methods=['PATCH'])
-def test():
+def submit():
     req = request.get_json()
     inputFormat = req['inputFormat'].split('--')[0].strip()
     outputFormat = req['outputFormat'].split('--')[0].strip()
