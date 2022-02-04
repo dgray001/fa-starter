@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
-import { Observable, fromEvent, of, concat } from 'rxjs';
+import { Observable, fromEvent, of, concat, combineLatest } from 'rxjs';
 import { map, startWith, mergeMap, mapTo, tap } from 'rxjs/operators';
 
 import { OpenBabelData } from '../OpenBabelData';
@@ -37,6 +37,21 @@ export class OptionsComponent implements AfterViewInit {
   );
   submitting$: Observable<boolean> = of(false);
   @ViewChild('submitButton', {read: ElementRef}) submitButton: ElementRef;
+  canSubmit$: Observable<boolean> = combineLatest(this.inputControl.valueChanges,
+    this.outputControl.valueChanges, this.submit$).pipe(
+      map(([inControl, outControl, submitting]) => {
+        if (inControl.invalid) {
+          return false;
+        }
+        if (outControl.invalid) {
+          return false;
+        }
+        if (submitting) {
+          return false;
+        }
+        return true;
+      })
+    );
 
   constructor(private readonly service: SubmitService) {}
 
