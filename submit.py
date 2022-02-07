@@ -9,16 +9,20 @@ from base64 import decodebytes
 
 blueprint = flask.Blueprint('submit', __name__, url_prefix="/submit")
 
-ip = "34.125.77.241" # external computeengine ip
-#ip = "10.182.0.2" # internal computeengine ip
-keyPath = "./test"
+ip = "35.235.97.88" # external computeengine ip
+keyPath = "./key"
 ssh_protocol = "ssh-rsa"
 projectId = "personal-fa-starter-app"
-zone = "us-west4-b"
+zone = "us-west2-b"
+
+def removeBashCommandOperators(string):
+    return string.split(';')[0].split('|')[0].split('&')[0].strip()
 
 @blueprint.route("/", methods=['PATCH'])
 def submit():
     req = request.get_json()
+    req['inputString'] = removeBashCommandOperators(req['inputString'])
+    req['additionalOptions'] = removeBashCommandOperators(req['additionalOptions'])
     inputFormat = req['inputFormat'].split('--')[0].strip()
     outputFormat = req['outputFormat'].split('--')[0].strip()
     inputFilename = "job/input." + inputFormat
