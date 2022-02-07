@@ -1,6 +1,7 @@
 import os
 import sys
 import paramiko
+#import socket
 
 import flask
 from flask import request
@@ -23,8 +24,11 @@ def submit():
     obabelCommand = "obabel -i " + inputFormat + " " + inputFilename + " -o " + outputFormat + " " + req['additionalOptions']
 
     ssh_client = paramiko.SSHClient()
-    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_client.connect(ip, username="yodan", password="")
+    #s = socket.socket()
+    #s.bind(("10.8.0.0", 0))
+    #s.connect(ip, 22)
+    ssh_client.load_system_host_keys()
+    ssh_client.connect(ip, username="yodan", password="", look_for_keys=False, allow_agent=False)
     ssh_client.exec_command("mkdir job")
 
     ftp = ssh_client.open_sftp()
