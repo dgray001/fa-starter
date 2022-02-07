@@ -9,11 +9,8 @@ from base64 import decodebytes
 
 blueprint = flask.Blueprint('submit', __name__, url_prefix="/submit")
 
-ip = "35.235.97.88" # external computeengine ip
+ip = "10.168.0.42"
 keyPath = "./key"
-ssh_protocol = "ssh-rsa"
-projectId = "personal-fa-starter-app"
-zone = "us-west2-b"
 
 def removeBashCommandOperators(string):
     return string.split(';')[0].split('|')[0].split('&')[0].strip()

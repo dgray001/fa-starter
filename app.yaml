@@ -7,6 +7,11 @@ instance_class: F2
 env_variables:
   BUCKET_NAME: "personal-fa-starter-app.appspot.com"
 
+
+vpc_access_connector:
+  name: projects/personal-fa-starter-app/locations/us-west2/connectors/obabel-connector
+  egress_setting: all-traffic
+
 handlers:
   - url: /.*
     script: auto
