@@ -17,7 +17,6 @@ def submit():
     req = request.get_json()
     inputFormat = req['inputFormat'].split('--')[0].strip()
     outputFormat = req['outputFormat'].split('--')[0].strip()
-    req['inputString'] = quote(req['inputString'])
     inputFilename = "job/input." + inputFormat
     obabelCommand = "obabel -i " + inputFormat + " " + inputFilename + " -o " + outputFormat + " " + quote(req['additionalOptions'])
 
@@ -28,8 +27,7 @@ def submit():
 
     ftp = ssh_client.open_sftp()
     inputFile = ftp.file(inputFilename, 'w')
-
-    inputFile.write(quote(req['inputString']))
+    inputFile.write(quot(req['inputString']))
     inputFile.flush()
     ftp.close()
 
