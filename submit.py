@@ -27,7 +27,7 @@ def submit():
 
     ftp = ssh_client.open_sftp()
     inputFile = ftp.file(inputFilename, 'w')
-    inputFile.write(quot(req['inputString']))
+    inputFile.write(quote(req['inputString']))
     inputFile.flush()
     ftp.close()
 
