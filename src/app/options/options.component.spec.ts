@@ -97,13 +97,15 @@ describe('OptionsComponent', () => {
     await fixture.whenStable();
     const additionalOptionsHarness = await loader.getHarness(MatInputHarness.with(
       {selector: '.additionalOptions'}));
-    let data: OpenBabelData = blankData;
-    component.data$ = of(blankData).pipe(tap((thisData) => data = thisData));
-    expect(data['additionalOptions']).toEqual("");
 
+    component.data$.subscribe(
+      data => expect(data['additionalOptions']).toEqual("")
+    );
     await additionalOptionsHarness.setValue("Some additional options text");
 
-    expect(data['additionalOptions']).toEqual("Some additional options text");
+    component.data$.subscribe(
+      data => expect(data['additionalOptions']).toEqual("Some additional options text")
+    );
   });
 
   it('should call service.submit when submit button is pressed', async () => {
