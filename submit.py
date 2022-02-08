@@ -17,8 +17,9 @@ def submit():
     req = request.get_json()
     inputFormat = req['inputFormat'].split('--')[0].strip()
     outputFormat = req['outputFormat'].split('--')[0].strip()
+    req['inputString'] = quote(req['inputString'])
     inputFilename = "job/input." + inputFormat
-    obabelCommand = quote("obabel -i " + inputFormat + " " + inputFilename + " -o " + outputFormat + " " + req['additionalOptions'])
+    obabelCommand = "obabel -i " + inputFormat + " " + inputFilename + " -o " + outputFormat + " " + quote(req['additionalOptions'])
 
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -28,17 +29,15 @@ def submit():
     ftp = ssh_client.open_sftp()
     inputFile = ftp.file(inputFilename, 'w')
 
-    inputFile.write(req['inputString'])
+    inputFile.write(quote(req['inputString']))
     inputFile.flush()
     ftp.close()
 
     stdin, stdout, stderr = ssh_client.exec_command(obabelCommand)
-    while not ssh_client.channel.exit_status_ready():
-        continue
-    out_exit_status = stdout.channel.recv_exit_status()
+    exit_status = stdout.channel.recv_exit_status()
     output = stdout.read().decode()
     error = stderr.read().decode()
-    if out_exit_status == 0:
+    if exit_status == 0:
         if "1 molecule converted" in error:
             req['output'] = output
         else:
