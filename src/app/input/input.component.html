@@ -1,4 +1,7 @@
 <mat-card *ngIf="service.data$ | async as data">
   <mat-card-title>Input</mat-card-title>
-  <textarea matInput class="inputTextBox" [(ngModel)]="data.inputString"></textarea>
+  <ngx-codemirror class="inputTextBox" [(ngModel)]="data.inputString" [options]="{
+    lineNumbers: true,
+    theme: 'material'
+  }"></ngx-codemirror>
 </mat-card>
