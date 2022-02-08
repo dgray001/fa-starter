@@ -33,7 +33,7 @@ def submit():
     ftp.close()
 
     stdin, stdout, stderr = ssh_client.exec_command(obabelCommand)
-    while not ssh_client.exit_status_ready():
+    while not ssh_client.channel.exit_status_ready():
         continue
     out_exit_status = stdout.channel.recv_exit_status()
     output = stdout.read().decode()
