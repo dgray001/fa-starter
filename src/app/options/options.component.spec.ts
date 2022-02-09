@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { By } from '@angular/platform-browser';
@@ -49,10 +49,13 @@ describe('OptionsComponent', () => {
       selector: '.inputInput'}));
 
     await input.focus();
-    let options = await input.getOptions();
 
-    expect(options.length).toEqual(2);
-    expect((await options[1].getText())).toEqual("test2 [Read-only]");
+    component.inputList.subscribe(
+      list => {
+        expect(list.length).toEqual(2);
+        expect(list[1]).toEqual("test2 [Read-only]");
+      }
+    );
   });
 
   it('should filter results for input drowdown list based on input', async () => {
@@ -74,10 +77,13 @@ describe('OptionsComponent', () => {
       selector: '.outputInput'}));
 
     await output.focus();
-    let options = await output.getOptions();
 
-    expect(options.length).toEqual(2);
-    expect((await options[1].getText())).toEqual("test3 [Write-only]");
+    component.outputList.subscribe(
+      list => {
+        expect(list.length).toEqual(2);
+        expect(list[1]).toEqual("test3 [Write-only]");
+      }
+    );
   });
 
   it('should filter results for output drowdown list based on input', async () => {
@@ -113,9 +119,37 @@ describe('OptionsComponent', () => {
     spyOn<any>(component['service'], 'submit');
     const submit = fixture.debugElement.query(By.css('.submitButton')).nativeElement;
 
+    submit.disabled = false;
     submit.click();
+    dispatchEvent(new Event('click'));
     fixture.detectChanges();
 
     expect(component['service'].submit).toHaveBeenCalled();
+  });
+
+  it('should update form control based on input', async () => {
+    await fixture.whenStable();
+    const input = await loader.getHarness(MatAutocompleteHarness.with({
+      selector: '.inputInput'}));
+
+    await input.focus();
+    await input.enterText("test1");
+
+    const output = await loader.getHarness(MatAutocompleteHarness.with({
+      selector: '.outputInput'}));
+
+    await output.focus();
+    await output.enterText("test1");
+
+    await input.getOptions();
+    await output.getOptions();
+    fixture.detectChanges();
+    const submit = fixture.debugElement.query(By.css('.submitButton')).nativeElement;
+    expect(submit.disabled).toEqual(false);
+    component.inputList.subscribe(
+      value => {
+        expect(component.inputControl.invalid).toEqual(false);
+        expect(submit.disabled).toEqual(false);
+      });
   });
 });
