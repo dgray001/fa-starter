@@ -43,7 +43,7 @@ describe('OutputComponent', () => {
     await fixture.whenStable();
     const outputHarness = await loader.getHarness(MatInputHarness.with(
       {selector: '.outputTextBox'}));
-    component.data$ = mockData;
+    component.service.data$ = mockData;
 
     const outputString = await outputHarness.getValue();
 

@@ -14,7 +14,6 @@ import { SubmitService } from '../submit.service';
 })
 export class OptionsComponent implements AfterViewInit {
   formats: String[] = FORMATS;
-  data$: Observable<OpenBabelData> = this.service.data$;
   inputControl = new FormControl('', [Validators.required, validateFormat(this.formats)]);
   inputList: Observable<String[]> = this.inputControl.valueChanges.pipe(
     startWith(""),
@@ -38,7 +37,7 @@ export class OptionsComponent implements AfterViewInit {
   submitting$: Observable<boolean> = of(false);
   @ViewChild('submitButton', {read: ElementRef}) submitButton: ElementRef;
 
-  constructor(private readonly service: SubmitService) {}
+  constructor(readonly service: SubmitService) {}
 
   ngAfterViewInit() {
     this.submitting$ = fromEvent(this.submitButton.nativeElement, 'click').pipe(

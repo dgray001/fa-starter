@@ -106,19 +106,14 @@ describe('OptionsComponent', () => {
 
   it('should filter out write-only results from input drop-down list', async () => {
     await createState();
-    spyOn<any>(component, 'inputList').and.callFake(() => of([""]));
     const input = await loader.getHarness(MatAutocompleteHarness.with({
       selector: '.inputInput'}));
 
     await input.focus();
+    let options = await input.getOptions();
 
-    //expect(spy).toHaveBeenCalledWith("");
-    component.inputList.subscribe(
-      list => {
-        expect(list.length).toEqual(2);
-        expect(list[1]).toEqual("test2 [Read-only]");
-      }
-    );
+    expect(options.length).toEqual(2);
+    expect((await options[1].getText())).toEqual("test2 [Read-only]");
   });
 
   it('should filter results for input drowdown list based on input', async () => {
@@ -140,13 +135,10 @@ describe('OptionsComponent', () => {
       selector: '.outputInput'}));
 
     await output.focus();
+    let options = await output.getOptions();
 
-    component.outputList.subscribe(
-      list => {
-        expect(list.length).toEqual(2);
-        expect(list[1]).toEqual("test3 [Write-only]");
-      }
-    );
+    expect(options.length).toEqual(2);
+    expect(await options[1].getText()).toEqual("test3 [Write-only]");
   });
 
   it('should filter results for output drowdown list based on input', async () => {
@@ -200,17 +192,43 @@ describe('OptionsComponent', () => {
     expect(outputError).toBeNull();
   });
 
+  it('should update data$ observable from input in outputFormat box', async () => {
+    await createState();
+    const output = await loader.getHarness(MatAutocompleteHarness.with({
+      selector: '.outputInput'}));
+
+    await output.focus();
+    await output.enterText("Output format");
+
+    component.service.data$.subscribe(
+      data => expect(data['outputFormat']).toEqual("Output format")
+    );
+  });
+
+  it('should update data$ observable from input in inputFormat box', async () => {
+    await createState();
+    const input = await loader.getHarness(MatAutocompleteHarness.with({
+      selector: '.inputInput'}));
+
+    await input.focus();
+    await input.enterText("Input format");
+
+    component.service.data$.subscribe(
+      data => expect(data['inputFormat']).toEqual("Input format")
+    );
+  });
+
   it('should update data$ observable from additional options string', async () => {
     await createState();
     const additionalOptionsHarness = await loader.getHarness(MatInputHarness.with(
       {selector: '.additionalOptions'}));
 
-    component.data$.subscribe(
+    component.service.data$.subscribe(
       data => expect(data['additionalOptions']).toEqual("")
     );
     await additionalOptionsHarness.setValue("Some additional options text");
 
-    component.data$.subscribe(
+    component.service.data$.subscribe(
       data => expect(data['additionalOptions']).toEqual("Some additional options text")
     );
   });

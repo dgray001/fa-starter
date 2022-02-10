@@ -43,13 +43,13 @@ describe('InputComponent', () => {
     await fixture.whenStable();
     const inputHarness = await loader.getHarness(MatInputHarness.with(
       {selector: '.inputTextBox'}));
-    component.data$.subscribe(
+    component.service.data$.subscribe(
       data => expect(data['inputString']).toEqual("")
     );
 
     await inputHarness.setValue("Some input text");
 
-    component.data$.subscribe(
+    component.service.data$.subscribe(
       data => expect(data['inputString']).toEqual("Some input text")
     );
   });
