@@ -15,7 +15,7 @@ import { SubmitService } from '../submit.service';
 export class OptionsComponent implements AfterViewInit {
   formats: String[] = FORMATS;
   data$: Observable<OpenBabelData> = this.service.data$;
-  inputControl = new FormControl('', [Validators.required, validateFormat]);
+  inputControl = new FormControl('', [Validators.required, validateFormat(this.formats)]);
   inputList: Observable<String[]> = this.inputControl.valueChanges.pipe(
     startWith(""),
     map(value => {
@@ -25,7 +25,7 @@ export class OptionsComponent implements AfterViewInit {
       });
     })
   );
-  outputControl = new FormControl('', [Validators.required, validateFormat]);
+  outputControl = new FormControl('', [Validators.required, validateFormat(this.formats)]);
   outputList: Observable<String[]> = this.outputControl.valueChanges.pipe(
     startWith(""),
     map(value => {
@@ -52,9 +52,11 @@ export class OptionsComponent implements AfterViewInit {
   }
 }
 
-function validateFormat(control: AbstractControl): {[key: string]: any} | null {
-  if (!FORMATS.includes(control.value)) {
-    return {invalidFormat: true};
-  }
-  return null;
+function validateFormat(validFormats: String[]) {
+  return (control: AbstractControl): {[key: string]: any} | null => {
+    if (!validFormats.includes(control.value)) {
+      return {invalidFormat: true};
+    }
+    return null;
+  };
 }
