@@ -14,6 +14,8 @@ import { AppComponent } from './app.component';
 import { InputComponent } from './input/input.component';
 import { OutputComponent } from './output/output.component';
 import { OptionsComponent } from './options/options.component';
+import { DataService } from './submit.abstract.service';
+import { SubmitService } from './submit.service';
 
 @NgModule({
   declarations: [AppComponent, InputComponent, OutputComponent, OptionsComponent],

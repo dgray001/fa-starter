@@ -2,29 +2,26 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject, from, OperatorFunction, pipe } from 'rxjs';
 import { mergeMap, catchError, tap, shareReplay, withLatestFrom } from 'rxjs/operators';
+
+import { DataService } from './submit.abstract.service';
 import { OpenBabelData } from './OpenBabelData';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SubmitService {
-  private readonly submitUrl: string = "/submit/";
-  private readonly blankData: OpenBabelData = {inputString: "", inputFormat: "", outputFormat: "",
-    additionalOptions: ""};
-  outputSubject: BehaviorSubject<OpenBabelData> = new BehaviorSubject(this.blankData);
-  data$: Observable<OpenBabelData> = from(this.outputSubject).pipe(
-    shareReplay(1)
-  );
+export class SubmitService extends DataService {
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(http: HttpClient) {
+    super(http);
+  }
 
   submit(): OperatorFunction<boolean, any> {
     return pipe(
       withLatestFrom(this.data$),
-      mergeMap(([_, data]) => this.http.patch<OpenBabelData>(this.submitUrl, data).pipe(
+      mergeMap(([_, data]) => this.http.patch<OpenBabelData>(this.getSubmitUrl(), data).pipe(
         tap((result) => this.outputSubject.next(result))
       )),
-      catchError(this.handleError<OpenBabelData>('submit', this.blankData))
+      catchError(this.handleError<OpenBabelData>('submit', this.getBlankData()))
     );
   }
 

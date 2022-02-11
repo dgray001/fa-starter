@@ -20,7 +20,7 @@ describe('OptionsComponent', () => {
   let component: OptionsComponent;
   let fixture: ComponentFixture<OptionsComponent>;
   let loader: HarnessLoader;
-  let mockService: MockSubmitService;
+  let service: MockSubmitService;
   const blankData: OpenBabelData = {inputString: "",
     inputFormat: "", outputFormat: "", additionalOptions: ""};
 
@@ -47,7 +47,7 @@ describe('OptionsComponent', () => {
   async function createState(state: string = ComponentState.BLANK) {
     fixture = TestBed.createComponent(OptionsComponent);
     component = fixture.componentInstance;
-    mockService = TestBed.inject(MockSubmitService);
+    service = TestBed.inject(MockSubmitService);
     component.formats = [ "test1", "test2 [Read-only]", "test3 [Write-only]" ];
     loader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
@@ -158,8 +158,6 @@ describe('OptionsComponent', () => {
     await createState();
     const inputError = fixture.debugElement.query(By.css('.input-error'));
     const outputError = fixture.debugElement.query(By.css('.output-error'));
-    expect(component.inputControl.invalid).toEqual(true);
-    expect(component.outputControl.invalid).toEqual(true);
     expect(inputError).toBeTruthy();
     expect(outputError).toBeTruthy();
   });
@@ -167,28 +165,24 @@ describe('OptionsComponent', () => {
   it('should display input mat-error if input form control is invalid', async () => {
     await createState(ComponentState.INVALID_INPUT);
     const inputError = fixture.debugElement.query(By.css('.input-error'));
-    expect(component.inputControl.invalid).toEqual(true);
     expect(inputError).toBeTruthy();
   });
 
   it('should display output mat-error if output form control is invalid', async () => {
     await createState(ComponentState.INVALID_OUTPUT);
     const outputError = fixture.debugElement.query(By.css('.output-error'));
-    expect(component.outputControl.invalid).toEqual(true);
     expect(outputError).toBeTruthy();
   });
 
   it('should not display input mat-error if input form control is valid', async () => {
     await createState(ComponentState.VALID_INPUT);
     const inputError = fixture.debugElement.query(By.css('.input-error'));
-    expect(component.inputControl.invalid).toEqual(false);
     expect(inputError).toBeNull();
   });
 
   it('should not display output mat-error if output form control is valid', async () => {
     await createState(ComponentState.VALID_OUTPUT);
     const outputError = fixture.debugElement.query(By.css('.output-error'));
-    expect(component.outputControl.invalid).toEqual(false);
     expect(outputError).toBeNull();
   });
 
@@ -200,7 +194,7 @@ describe('OptionsComponent', () => {
     await output.focus();
     await output.enterText("Output format");
 
-    component.service.data$.subscribe(
+    service.data$.subscribe(
       data => expect(data['outputFormat']).toEqual("Output format")
     );
   });
@@ -213,7 +207,7 @@ describe('OptionsComponent', () => {
     await input.focus();
     await input.enterText("Input format");
 
-    component.service.data$.subscribe(
+    service.data$.subscribe(
       data => expect(data['inputFormat']).toEqual("Input format")
     );
   });
@@ -223,19 +217,19 @@ describe('OptionsComponent', () => {
     const additionalOptionsHarness = await loader.getHarness(MatInputHarness.with(
       {selector: '.additionalOptions'}));
 
-    component.service.data$.subscribe(
+    service.data$.subscribe(
       data => expect(data['additionalOptions']).toEqual("")
     );
     await additionalOptionsHarness.setValue("Some additional options text");
 
-    component.service.data$.subscribe(
+    service.data$.subscribe(
       data => expect(data['additionalOptions']).toEqual("Some additional options text")
     );
   });
 
   it('should call service.submit when submit button is pressed', async () => {
     await createState();
-    spyOn<any>(component['service'], 'submit').and.returnValue(mockService.submit());
+    spyOn<any>(service, 'submit').and.callThrough();
     const submit = fixture.debugElement.query(By.css('.submitButton')).nativeElement;
 
     submit.disabled = false;
@@ -243,7 +237,7 @@ describe('OptionsComponent', () => {
     dispatchEvent(new Event('click'));
     fixture.detectChanges();
 
-    expect(component['service'].submit).toHaveBeenCalled();
+    expect(service.submit).toHaveBeenCalled();
   });
 
   for (const state of Object.keys(ComponentState)) {

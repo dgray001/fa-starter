@@ -5,6 +5,7 @@ import { map, startWith, mergeMap, mapTo, tap } from 'rxjs/operators';
 
 import { OpenBabelData } from '../OpenBabelData';
 import { FORMATS } from '../formatlist';
+import { DataService } from '../submit.abstract.service';
 import { SubmitService } from '../submit.service';
 
 @Component({
@@ -37,7 +38,7 @@ export class OptionsComponent implements AfterViewInit {
   submitting$: Observable<boolean> = of(false);
   @ViewChild('submitButton', {read: ElementRef}) submitButton: ElementRef;
 
-  constructor(readonly service: SubmitService) {}
+  constructor(readonly service: DataService) {}
 
   ngAfterViewInit() {
     this.submitting$ = fromEvent(this.submitButton.nativeElement, 'click').pipe(
