@@ -16,7 +16,7 @@ export abstract class DataService {
     shareReplay(1)
   );
 
-  constructor(readonly http: HttpClient) {}
+  constructor() {}
 
   getSubmitUrl(): string {
     return this.submitUrl;

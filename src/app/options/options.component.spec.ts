@@ -15,6 +15,8 @@ import { tap } from 'rxjs/operators';
 import { OpenBabelData } from '../OpenBabelData';
 import { OptionsComponent } from './options.component';
 import { MockSubmitService } from '../submit.mock.service';
+import { DataService } from '../submit.abstract.service';
+import { SubmitService } from '../submit.service';
 
 describe('OptionsComponent', () => {
   let component: OptionsComponent;
@@ -29,7 +31,7 @@ describe('OptionsComponent', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       imports: [ FormsModule, ReactiveFormsModule, MatAutocompleteModule, HttpClientTestingModule ],
       declarations: [ OptionsComponent ],
-      providers: [ MockSubmitService ]
+      providers: [ OptionsComponent, { provide: DataService, useClass: MockSubmitService } ]
     })
     .compileComponents();
   });
@@ -45,9 +47,9 @@ describe('OptionsComponent', () => {
     VALID_OUTPUT: "Valid Output",
   };
   async function createState(state: string = ComponentState.BLANK) {
+    service = TestBed.inject(DataService);
     fixture = TestBed.createComponent(OptionsComponent);
     component = fixture.componentInstance;
-    service = TestBed.inject(MockSubmitService);
     component.formats = [ "test1", "test2 [Read-only]", "test3 [Write-only]" ];
     loader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
@@ -80,7 +82,6 @@ describe('OptionsComponent', () => {
         await input.enterText("Invalid input format");
         break;
       case ComponentState.VALID_INPUT:
-        await fixture.whenStable();
         await input.focus();
         await input.enterText("acesout -- ACES output format [Read-only]");
         break;
@@ -112,7 +113,7 @@ describe('OptionsComponent', () => {
     await input.focus();
     let options = await input.getOptions();
 
-    expect(options.length).toEqual(2);
+    expect((await input.getOptions()).length).toEqual(2);
     expect((await options[1].getText())).toEqual("test2 [Read-only]");
   });
 

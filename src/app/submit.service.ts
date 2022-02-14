@@ -11,8 +11,8 @@ import { OpenBabelData } from './OpenBabelData';
 })
 export class SubmitService extends DataService {
 
-  constructor(http: HttpClient) {
-    super(http);
+  constructor(private readonly http: HttpClient) {
+    super();
   }
 
   submit(): OperatorFunction<boolean, any> {
