@@ -10,7 +10,7 @@ env_variables:
 
 vpc_access_connector:
   name: projects/personal-fa-starter-app/locations/us-west2/connectors/obabel-connector
-  egress_setting: all-traffic
+  egress_setting: private-ranges-only
 
 handlers:
   - url: /.*
