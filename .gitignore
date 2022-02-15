@@ -50,6 +50,7 @@ Thumbs.db
 # flask
 env/*
 __pycache__/*
+tests/__pycache__/*
 
 # gcloud
 .gcloudignore
