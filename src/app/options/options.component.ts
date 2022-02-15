@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable, fromEvent, of, concat } from 'rxjs';
-import { map, startWith, mergeMap, mapTo, tap } from 'rxjs/operators';
+import { map, startWith, mergeMap, mapTo, tap, merge, withLatestFrom } from 'rxjs/operators';
 
 import { OpenBabelData } from '../OpenBabelData';
 import { FORMATS } from '../formatlist';
@@ -36,6 +36,7 @@ export class OptionsComponent implements AfterViewInit {
     }),
   );
   submitting$: Observable<boolean> = of(false);
+  disabled$: Observable<boolean> = of(true);
   @ViewChild('submitButton', {read: ElementRef}) submitButton: ElementRef;
 
   constructor(readonly service: DataService) {}
@@ -48,6 +49,16 @@ export class OptionsComponent implements AfterViewInit {
           of(true).pipe(this.service.submit(), mapTo(false))
         );
       }), startWith(false)
+    );
+    this.disabled$ = this.submitting$.pipe(
+      merge(this.inputControl.valueChanges, this.outputControl.valueChanges),
+      withLatestFrom(this.submitting$),
+      map(([_, submitting]) => {
+        if (this.inputControl.invalid || this.outputControl.invalid || submitting) {
+          return true;
+        }
+        return false;
+      })
     );
   }
 }

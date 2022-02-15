@@ -9,8 +9,8 @@ import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of, pipe, NEVER } from 'rxjs';
+import { tap, mergeMap } from 'rxjs/operators';
 
 import { OpenBabelData } from '../OpenBabelData';
 import { OptionsComponent } from './options.component';
@@ -65,17 +65,17 @@ describe('OptionsComponent', () => {
         await input.enterText("acesout -- ACES output format [Read-only]");
         await output.focus();
         await output.enterText("acesin -- ACES input format [Write-only]");
-        component.submitting$ = of(false);
-        break;
-      case ComponentState.SUBMITTING:
-        component.submitting$ = of(true);
         break;
       case ComponentState.VALID_AND_SUBMITTING:
         await input.focus();
         await input.enterText("acesout -- ACES output format [Read-only]");
         await output.focus();
         await output.enterText("acesin -- ACES input format [Write-only]");
-        component.submitting$ = of(true);
+        spyOn<any>(service, 'submit').and.returnValue(pipe(mergeMap(() => NEVER.pipe())));
+        const submit = fixture.debugElement.query(By.css('.submitButton')).nativeElement;
+        submit.click();
+        dispatchEvent(new Event('click'));
+        fixture.detectChanges();
         break;
       case ComponentState.INVALID_INPUT:
         await input.focus();
@@ -229,11 +229,10 @@ describe('OptionsComponent', () => {
   });
 
   it('should call service.submit when submit button is pressed', async () => {
-    await createState();
+    await createState(ComponentState.VALID);
     spyOn<any>(service, 'submit').and.callThrough();
     const submit = fixture.debugElement.query(By.css('.submitButton')).nativeElement;
 
-    submit.disabled = false;
     submit.click();
     dispatchEvent(new Event('click'));
     fixture.detectChanges();
