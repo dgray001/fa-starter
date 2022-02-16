@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
@@ -14,6 +14,9 @@ import { AppComponent } from './app.component';
 import { InputComponent } from './input/input.component';
 import { OutputComponent } from './output/output.component';
 import { OptionsComponent } from './options/options.component';
+import { DataService } from './submit.abstract.service';
+import { SubmitService } from './submit.service';
+import { MockSubmitService } from './submit.mock.service';
 
 @NgModule({
   declarations: [AppComponent, InputComponent, OutputComponent, OptionsComponent],
@@ -33,6 +36,13 @@ import { OptionsComponent } from './options/options.component';
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'fill' },
+    },
+    {
+      provide: DataService,
+      deps: [HttpClient],
+      useFactory: (http: HttpClient) => {
+        return new SubmitService(http);
+      },
     },
   ],
   bootstrap: [AppComponent],

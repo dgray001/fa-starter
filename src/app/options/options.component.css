@@ -24,6 +24,11 @@
   width: 100%;
 }
 
+.mat-card .submit {
+  display: flex;
+  justify-content: right;
+}
+
 .spacer {
   height: 2rem;
 }

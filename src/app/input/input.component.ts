@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { OpenBabelData } from '../OpenBabelData';
-import { SubmitService } from '../submit.service';
+import { DataService } from '../submit.abstract.service';
 
 @Component({
   selector: 'app-input',
@@ -10,7 +10,5 @@ import { SubmitService } from '../submit.service';
   styleUrls: ['./input.component.css']
 })
 export class InputComponent {
-  data$: Observable<OpenBabelData> = this.service.data$;
-
-  constructor(private readonly service: SubmitService) {}
+  constructor(readonly service: DataService) {}
 }

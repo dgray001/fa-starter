@@ -11,11 +11,14 @@ import { tap } from 'rxjs/operators';
 
 import { OpenBabelData } from '../OpenBabelData';
 import { InputComponent } from './input.component';
+import { DataService } from '../submit.abstract.service';
+import { MockSubmitService } from '../submit.mock.service';
 
 describe('InputComponent', () => {
   let component: InputComponent;
   let fixture: ComponentFixture<InputComponent>;
   let loader: HarnessLoader;
+  let service: MockSubmitService;
   const blankData: OpenBabelData = {inputString: "",
     inputFormat: "", outputFormat: "", additionalOptions: ""};
 
@@ -24,11 +27,13 @@ describe('InputComponent', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       imports: [ FormsModule, HttpClientTestingModule ],
       declarations: [ InputComponent ],
+      providers: [ InputComponent, { provide: DataService, useClass: MockSubmitService } ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
+    service = TestBed.inject(DataService);
     fixture = TestBed.createComponent(InputComponent);
     component = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
@@ -43,13 +48,13 @@ describe('InputComponent', () => {
     await fixture.whenStable();
     const inputHarness = await loader.getHarness(MatInputHarness.with(
       {selector: '.inputTextBox'}));
-    component.data$.subscribe(
+    service.data$.subscribe(
       data => expect(data['inputString']).toEqual("")
     );
 
     await inputHarness.setValue("Some input text");
 
-    component.data$.subscribe(
+    service.data$.subscribe(
       data => expect(data['inputString']).toEqual("Some input text")
     );
   });
