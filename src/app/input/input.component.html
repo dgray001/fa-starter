@@ -1,5 +1,11 @@
 <mat-card *ngIf="service.data$ | async as data">
-  <mat-card-title>Input</mat-card-title>
+  <mat-card-title>
+    <span>Input</span>
+    <button mat-flat-button class="uploadFileButton" [disabled]="uploadingFile$ | async"
+      (click)="fileInput.click()">Upload File</button>
+    <input hidden type="file" #fileInput>
+    <span class="message" *ngIf="message$ | async as message">{{message}}</span>
+  </mat-card-title>
   <ngx-codemirror matInput ngDefaultControl class="inputTextBox" [(ngModel)]="data.inputString"
     [options]="CodeMirrorConfig"></ngx-codemirror>
 </mat-card>
