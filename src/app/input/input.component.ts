@@ -3,6 +3,7 @@ import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable, Observer, fromEvent, of, concat, pipe, OperatorFunction } from 'rxjs';
 import { mergeMap, mapTo, tap, startWith, withLatestFrom } from 'rxjs/operators';
 
+import { FORMATS } from '../formatlist';
 import { OpenBabelData } from '../OpenBabelData';
 import { DataService } from '../submit.abstract.service';
 import { CodeMirrorConfig } from '../codemirror.options';
@@ -43,10 +44,10 @@ export class InputComponent implements AfterViewInit {
           }
           else {
             if (files.length > 1) {
-              observer.next("Cannot upload multiple files.");
+              observer.next("Cannot upload multiple files");
             }
             else if (files[0].size > this.maxFileSize) {
-              observer.next(files[0].name + " too large (max " + this.maxFileSize/1000 + " kb).");
+              observer.next(files[0].name + " too large (max " + this.maxFileSize/1000 + " kb)");
             }
             else {
               observer.next("uploading " + files[0].name);
