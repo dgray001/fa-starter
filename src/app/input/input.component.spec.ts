@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -21,10 +21,7 @@ describe('InputComponent', () => {
   let service: MockSubmitService;
   const blankData: OpenBabelData = {inputString: "",
     inputFormat: "", outputFormat: "", additionalOptions: ""};
-  const mockFile: File = new File(['mock file'], 'mockfile.smi', { } );
-  const mockEventNoFile = { target: { files: [] } };
-  const mockEventMultipleFiles = { target: { files: [mockFile, mockFile] } };
-  const mockEvent = { target: { files: [mockFile] } };
+  const mockFile: File = new File(['mock file contents'], 'mockfile.smi', { } );
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -79,14 +76,14 @@ describe('InputComponent', () => {
 
   it('should call component.uploadFiles(event) when fileInput has a change event', async () => {
     await fixture.whenStable();
-    spyOn(component, 'uploadFiles');
+    let uploadSpy = spyOn(component, 'uploadFiles');
     const mockEvent = new Event('change');
     const uploadFileInput = fixture.debugElement.query(By.css('input')).nativeElement;
 
     uploadFileInput.dispatchEvent(mockEvent);
     fixture.detectChanges();
 
-    expect(component.uploadFiles).toHaveBeenCalledWith(mockEvent);
+    expect(uploadSpy).toHaveBeenCalledWith(mockEvent);
   });
 
   it('should display no message initially', async () => {
@@ -110,55 +107,43 @@ describe('InputComponent', () => {
 
   it('should display error message if uploaded multiple files', async () => {
     await fixture.whenStable();
-    spyOn(component, 'uploadFiles').and.callThrough();
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(mockFile);
+    dataTransfer.items.add(mockFile);
+    const uploadFileInput = fixture.debugElement.query(By.css('input')).nativeElement;
 
-    of(null).pipe(component.uploadFiles(mockEventMultipleFiles)).subscribe();
+    uploadFileInput.files = dataTransfer.files;
+    uploadFileInput.dispatchEvent(new InputEvent('change'));
     fixture.detectChanges();
     const message = fixture.debugElement.query(By.css('.message'));
 
     expect(message.nativeElement.innerText).toEqual("Cannot upload multiple files");
   });
 
-  it('should update service data if file uploaded', async () => {
+  it('should update inputString and inputFormat upon file upload', async () => {
     await fixture.whenStable();
-    spyOn(component, 'uploadFiles').and.callThrough();
-    let uploading: boolean = true;
+    let uploadSpy = spyOn(component, 'uploadFiles').and.callThrough();
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(mockFile);
+    const uploadFileInput = fixture.debugElement.query(By.css('input')).nativeElement;
 
-    const eventSub = of(null).pipe(component.uploadFiles(mockEvent)).subscribe(
-      result => {
-        fixture.detectChanges();
-        const message = fixture.debugElement.query(By.css('.message')).nativeElement;
-        if (uploading) {
-          expect(message.innerText).toEqual("uploading mockfile.smi");
-          const sub = service.data$.subscribe(
-            data => {
-              expect(data['inputString']).toEqual('');
-              expect(data['inputFormat']).toEqual('');
-            }
-          );
-          sub.unsubscribe();
-        }
-        else {
-          expect(message.innerText).toEqual("uploaded mockfile.smi");
-          const sub = service.data$.subscribe(
-            data => {
-              expect(data['inputString']).toEqual('mock file');
-              expect(data['inputFormat']).toEqual('smi -- SMILES');
-            }
-          );
-          sub.unsubscribe();
-        }
-        uploading = false;
-      }
-    );
-    eventSub.unsubscribe();
-    /*await fixture.whenStable();
+    uploadFileInput.files = dataTransfer.files;
+    uploadFileInput.dispatchEvent(new InputEvent('change'));
     fixture.detectChanges();
     const message = fixture.debugElement.query(By.css('.message'));
 
-    expect(message.nativeElement.innerText).toEqual("uploading mockfile");
+    expect(message.nativeElement.innerText).toEqual("uploading mockfile.smi");
+    //expect(inputBox.nativeElement.innerText).toEqual("");
+    of(null).pipe(mergeMap(component.uploadFiles(mockEvent)).subscribe(
+    );
     service.data$.subscribe(
-      data => expect(data['inputString']).toEqual('mock file')
-    ); */
+      async (data) => {
+        console.log(data);
+        await fixture.whenStable();
+        fixture.detectChanges();
+        const inputBox = fixture.debugElement.query(By.css('.inputTextBox'));
+        expect(inputBox.nativeElement.innerText).toEqual("mock file contents");
+      }
+    );
   });
 });
