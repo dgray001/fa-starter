@@ -6,12 +6,5 @@
 }
 
 .mat-card .outputTextBox {
-  background: rgb(200, 200, 200);
-  color: black;
   flex-grow: 1;
-  overflow-x: scroll;
-  overflow-wrap: normal;
-  resize: horizontal;
-  width: 100%;
-  white-space: pre;
 }

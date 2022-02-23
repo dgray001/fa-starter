@@ -1,4 +1,5 @@
 <mat-card *ngIf="service.data$ | async as data">
   <mat-card-title>Output</mat-card-title>
-  <textarea matInput class="outputTextBox" [(ngModel)]="data.output"></textarea>
+  <ngx-codemirror ngDefaultControl class="outputTextBox" [(ngModel)]="data.output"
+    [options]="CodeMirrorConfig"></ngx-codemirror>
 </mat-card>
