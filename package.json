@@ -25,6 +25,7 @@
     "@ctrl/ngx-codemirror": "^5.1.1",
     "@types/chart.js": "^2.9.23",
     "@types/underscore": "^1.10.15",
+    "angular-material-fileupload": "^3.0.2",
     "chart.js": "^2.9.4",
     "codemirror": "^5.65.1",
     "moment": "^2.27.0",

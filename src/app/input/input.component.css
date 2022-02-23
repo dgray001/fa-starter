@@ -5,6 +5,23 @@
   height: 100%;
 }
 
+.mat-card .mat-card-title {
+  position: relative;
+}
+
+.mat-card .uploadFileButton {
+  position: absolute;
+  right: 0px;
+  top: -8px;
+}
+
+.mat-card .message {
+  position: absolute;
+  right: 110px;
+  font-size: 13px;
+  top: 0px;
+}
+
 .mat-card .inputTextBox {
   flex-grow: 1;
 }
