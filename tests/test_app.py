@@ -57,7 +57,7 @@ class TestApp(flask_unittest.ClientTestCase):
 
     def test_index_page(self, client):
         response: Response = client.get('/')
-        self.assertEqual(rv.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         response.close()
 
     @patch.object(paramiko, "SSHClient", MagicMock(return_value = MockSSHClient()))
@@ -65,8 +65,8 @@ class TestApp(flask_unittest.ClientTestCase):
         mockData = {"inputString": "Mock input", "inputFormat": "Mock input format", "outputFormat": "Mock output format", "additionalOptions": "Mock additional options", "output": "", "log": "" }
         response: Response = client.patch('/submit', json = mockData, follow_redirects = True)
         paramiko.SSHClient.assert_called_once()
-        self.assertEqual(rv.status_code, 200)
-        self.assertIn("Mock Output", rv.get_data().decode())
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Mock Output", response.get_data().decode())
         response.close()
 
 
