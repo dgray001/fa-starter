@@ -50,6 +50,11 @@ Thumbs.db
 # flask
 env/*
 __pycache__/*
+tests/__pycache__/*
 
 # gcloud
 .gcloudignore
+
+# key
+obabel-key
+obabel-key.pub

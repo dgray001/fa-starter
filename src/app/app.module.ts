@@ -8,6 +8,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,7 +31,8 @@ import { MockSubmitService } from './submit.mock.service';
     HttpClientModule,
     MatAutocompleteModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    CodemirrorModule
   ],
   providers: [
     {

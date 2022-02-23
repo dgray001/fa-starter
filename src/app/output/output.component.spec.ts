@@ -18,9 +18,6 @@ describe('OutputComponent', () => {
   let fixture: ComponentFixture<OutputComponent>;
   let loader: HarnessLoader;
   let service: MockSubmitService;
-  const mockData: Observable<OpenBabelData> = of({inputString: "CCCCOc1ccccc1",
-    inputFormat: "SMI", outputFormat: "MOL", additionalOptions: "--gen2D",
-    output: "Some output text"});
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -46,12 +43,18 @@ describe('OutputComponent', () => {
 
   it('should update output string based on data$ observable', async () => {
     await fixture.whenStable();
-    const outputHarness = await loader.getHarness(MatInputHarness.with(
-      {selector: '.outputTextBox'}));
-    service.data$ = mockData;
+    const outputTextbox = fixture.debugElement.query(By.css('.outputTextBox')).nativeElement;
 
-    const outputString = await outputHarness.getValue();
+    service.data$.subscribe(
+      data => expect(data['output']).toBeFalsy()
+    );
 
-    expect(outputString).toEqual("Some output text");
+    outputTextbox.value = "Some output text";
+    outputTextbox.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    service.data$.subscribe(
+      data => expect(data['output']).toEqual("Some output text")
+    );
   });
 });

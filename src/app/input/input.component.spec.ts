@@ -46,13 +46,14 @@ describe('InputComponent', () => {
 
   it('should update data$ observable from input in input box', async () => {
     await fixture.whenStable();
-    const inputHarness = await loader.getHarness(MatInputHarness.with(
-      {selector: '.inputTextBox'}));
+    const inputTextbox = fixture.debugElement.query(By.css('.inputTextBox')).nativeElement;
     service.data$.subscribe(
       data => expect(data['inputString']).toEqual("")
     );
 
-    await inputHarness.setValue("Some input text");
+    inputTextbox.value = "Some input text";
+    inputTextbox.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
 
     service.data$.subscribe(
       data => expect(data['inputString']).toEqual("Some input text")

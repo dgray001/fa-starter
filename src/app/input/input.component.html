@@ -1,4 +1,5 @@
 <mat-card *ngIf="service.data$ | async as data">
   <mat-card-title>Input</mat-card-title>
-  <textarea matInput class="inputTextBox" [(ngModel)]="data.inputString"></textarea>
+  <ngx-codemirror matInput ngDefaultControl class="inputTextBox" [(ngModel)]="data.inputString"
+    [options]="CodeMirrorConfig"></ngx-codemirror>
 </mat-card>
