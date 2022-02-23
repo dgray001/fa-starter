@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable, Observer, fromEvent, of, concat, pipe, OperatorFunction } from 'rxjs';
-import { mergeMap, mapTo, tap, startWith, withLatestFrom } from 'rxjs/operators';
+import { mergeMap, map, tap, startWith, withLatestFrom } from 'rxjs/operators';
 
 import { FORMATS } from '../formatlist';
 import { OpenBabelData } from '../OpenBabelData';
@@ -27,7 +27,12 @@ export class InputComponent implements AfterViewInit {
       mergeMap((event) => {
         return concat(
           of(true),
-          of(true).pipe(this.uploadFiles(event), mapTo(false)),
+          of(true).pipe(this.uploadFiles(event), map((message) => {
+            if (message.includes("uploading")) {
+              return true;
+            }
+            return false;
+          })),
         );
       }), startWith(false)
     );

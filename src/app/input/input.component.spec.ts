@@ -7,7 +7,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable, of, pipe } from 'rxjs';
-import { tap, mapTo, shareReplay } from 'rxjs/operators';
+import { tap, mapTo, shareReplay, take } from 'rxjs/operators';
 
 import { OpenBabelData } from '../OpenBabelData';
 import { InputComponent } from './input.component';
@@ -120,21 +120,35 @@ describe('InputComponent', () => {
     expect(message.nativeElement.innerText).toEqual("Cannot upload multiple files");
   });
 
-  it('should update inputString and inputFormat upon file upload', async () => {
-    await fixture.whenStable();
+  it('should update inputString and inputFormat upon file upload', doneCallback => {
+    fixture.whenStable().then(() => {
+    });
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(mockFile);
     const uploadFileInput = fixture.debugElement.query(By.css('input')).nativeElement;
 
+    let uploaded: boolean = false;
+    component.uploadingFile$.pipe(take(4)).subscribe((uploading) => {
+      if (uploading) {
+        uploaded = true;
+        fixture.detectChanges();
+        const message = fixture.debugElement.query(By.css('.message'));
+        expect(message.nativeElement.innerText).toEqual("uploading mockfile.smi");
+      }
+      else if (uploaded) {
+        service.data$.subscribe(
+          data => {
+            expect(data['inputString']).toEqual("mock file contents");
+            expect(data['inputFormat']).toEqual("smi -- SMILES format");
+          }
+        );
+        fixture.detectChanges();
+        const message = fixture.debugElement.query(By.css('.message'));
+        expect(message.nativeElement.innerText).toEqual("uploaded mockfile.smi");
+        doneCallback();
+      }
+    });
     uploadFileInput.files = dataTransfer.files;
-    component.service.data$.pipe(shareReplay(1));
-    component.service.data$.subscribe(
-      data => console.log(data)
-    );
     uploadFileInput.dispatchEvent(new InputEvent('change'));
-    fixture.detectChanges();
-    const message = fixture.debugElement.query(By.css('.message'));
-
-    expect(message.nativeElement.innerText).toEqual("uploading mockfile.smi");
   });
 });
