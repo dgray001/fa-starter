@@ -71,7 +71,7 @@ export class InputComponent implements AfterViewInit {
             }
           }
         }).pipe(
-          tap((result) => this.message$ = of(result))
+          tap((result) => this.message$ = of(result)),
         );
       }),
     );

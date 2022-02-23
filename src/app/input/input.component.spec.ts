@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -7,7 +7,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable, of, pipe } from 'rxjs';
-import { tap, mapTo } from 'rxjs/operators';
+import { tap, mapTo, shareReplay } from 'rxjs/operators';
 
 import { OpenBabelData } from '../OpenBabelData';
 import { InputComponent } from './input.component';
@@ -122,28 +122,19 @@ describe('InputComponent', () => {
 
   it('should update inputString and inputFormat upon file upload', async () => {
     await fixture.whenStable();
-    let uploadSpy = spyOn(component, 'uploadFiles').and.callThrough();
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(mockFile);
     const uploadFileInput = fixture.debugElement.query(By.css('input')).nativeElement;
 
     uploadFileInput.files = dataTransfer.files;
+    component.service.data$.pipe(shareReplay(1));
+    component.service.data$.subscribe(
+      data => console.log(data)
+    );
     uploadFileInput.dispatchEvent(new InputEvent('change'));
     fixture.detectChanges();
     const message = fixture.debugElement.query(By.css('.message'));
 
     expect(message.nativeElement.innerText).toEqual("uploading mockfile.smi");
-    //expect(inputBox.nativeElement.innerText).toEqual("");
-    of(null).pipe(mergeMap(component.uploadFiles(mockEvent)).subscribe(
-    );
-    service.data$.subscribe(
-      async (data) => {
-        console.log(data);
-        await fixture.whenStable();
-        fixture.detectChanges();
-        const inputBox = fixture.debugElement.query(By.css('.inputTextBox'));
-        expect(inputBox.nativeElement.innerText).toEqual("mock file contents");
-      }
-    );
-  });
+  }));
 });
