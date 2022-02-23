@@ -33,7 +33,7 @@ describe('InputComponent', () => {
     .compileComponents();
   });
 
-  beforeEach(() => {
+  beforeEach(async () => {
     service = TestBed.inject(DataService);
     fixture = TestBed.createComponent(InputComponent);
     component = fixture.componentInstance;
@@ -136,5 +136,5 @@ describe('InputComponent', () => {
     const message = fixture.debugElement.query(By.css('.message'));
 
     expect(message.nativeElement.innerText).toEqual("uploading mockfile.smi");
-  }));
+  });
 });
